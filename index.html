@@ -1,12 +1,162 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>nour-academy</title>
+    <title>Nour Academy</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
   </head>
-  <body>
+
+  <body class="bg-[#FAF8F2] text-[#1D2924]">
+    <!-- Header -->
+    <header
+      class="flex justify-between items-center px-6 md:px-12 py-2 bg-[#E6F0E9]"
+    >
+      <a href="index.html">
+        <img
+          src="/src/assets/logo.png"
+          alt="Nour Academy"
+          class="h-13.75 rounded-3xl"
+        />
+      </a>
+
+      <div class="flex gap-6 text-[#174A3A]">
+        <i class="fa-solid fa-circle-user text-xl" aria-label="Profil"></i>
+        <i class="fa-solid fa-bell text-xl" aria-label="Notifications"></i>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section
+      id="hero_section"
+      class="flex flex-col md:flex-row justify-between items-center gap-10 px-6 md:px-12 py-12 md:py-20"
+    >
+      <div class="intro space-y-5 md:w-1/2">
+        <p class="text-sm md:text-base font-semibold text-[#174A3A]">
+          SOUTIEN SCOLAIRE · COLLÈGE & LYCÉE
+        </p>
+
+        <h1 class="text-4xl md:text-5xl font-bold leading-tight">
+          Le bon cours pour réussir.
+        </h1>
+
+        <p class="text-lg text-[#65716A] leading-relaxed">
+          Des cours en petits groupes, un suivi attentif et une méthode pour
+          progresser avec confiance.
+        </p>
+      </div>
+      <div
+        class="filtre w-full md:w-5/12 space-y-5 bg-white p-6 rounded-2xl shadow-2xl"
+      >
+        <h2 class="text-xl font-bold">Trouvez le cours qui vous correspond</h2>
+        <div
+          class="flex items-center gap-3 border border-[#E6F0E9] rounded-xl px-4 py-3"
+        >
+          <i
+            class="fa-solid fa-magnifying-glass text-[#65716A]"
+            aria-hidden="true"
+          ></i>
+
+          <input
+            type="search"
+            id="recherche"
+            name="recherche"
+            placeholder="Rechercher un cours..."
+            class="w-full outline-none bg-transparent"
+          />
+        </div>
+        <select
+          name="niveau"
+          id="niveau"
+          class="w-full bg-[#E6F0E9] text-[#174A3A] rounded-xl p-3"
+        >
+          <option value="">Tous les niveaux</option>
+          <option value="college">Collège</option>
+          <option value="tronc-commun">Tronc commun</option>
+          <option value="1bac">1re année Bac</option>
+          <option value="2bac">2e année Bac</option>
+        </select>
+        <select
+          name="matiere"
+          id="matiere"
+          class="w-full bg-[#E6F0E9] text-[#174A3A] rounded-xl p-3"
+        >
+          <option value="">Toutes les matières</option>
+          <option value="mathematiques">Mathématiques</option>
+          <option value="physique-chimie">Physique-Chimie</option>
+          <option value="francais">Français</option>
+          <option value="anglais">Anglais</option>
+          <option value="svt">SVT</option>
+          <option value="philosophie">Philosophie</option>
+        </select>
+
+        <p class="text-sm text-[#65716A]">
+          Tous les niveaux, de la 1re année collège à la 2e année bac.
+        </p>
+      </div>
+    </section>
+
+    <!-- Cards -->
+    <section id="cards_and_panier" class="bg-[#FAF8F2] py-6">
+      <div class="contenair_cards">
+        <h3 class="mx-6 my-3 text-2xl font-semibold text-[#174A3A]">
+          Cours Disponibles
+        </h3>
+
+        <section class="cards px-6 py-3">
+          <div
+            id="card1"
+            class="w-full max-w-[350px] space-y-3 rounded-2xl border border-[#E6F0E9] bg-white p-4 shadow-sm"
+          >
+            <main class="flex items-start gap-3">
+              <div
+                class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#E6F0E9] text-[#174A3A]"
+              >
+                <i class="fa-solid fa-ruler text-2xl" aria-hidden="true"></i>
+              </div>
+
+              <div>
+                <h2 class="text-lg font-bold text-[#174A3A]">Mathématiques</h2>
+
+                <p class="text-sm text-[#65716A]">
+                  Soutien scolaire (Collège/Lycée)
+                </p>
+
+                <p class="mt-1 text-xs text-[#65716A]">
+                  2h/semaine · En petit groupe
+                </p>
+              </div>
+            </main>
+
+            <p class="text-sm text-[#65716A]">Algèbre, analyse et géométrie</p>
+
+            <p class="text-sm text-[#1D2924]">
+              <strong class="text-[#174A3A]">250 DH</strong> / mois
+            </p>
+
+            <a
+              href="#"
+              class="block text-right text-sm text-[#174A3A] underline"
+            >
+              Voir les détails
+            </a>
+
+            <button
+              id="add_toPanier"
+              type="button"
+              class="w-full rounded-xl bg-[#174A3A] p-2 text-sm font-medium text-white hover:bg-[#10372C]"
+            >
+              Ajouter au panier +
+            </button>
+          </div>
+        </section>
+      </div>
+    </section>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
