@@ -1,0 +1,145 @@
+[
+  {
+    "id": 1,
+    "title": "Mathématiques",
+    "level": "3e année collège",
+    "levelCategory": "Collège",
+    "subject": "Mathématiques",
+    "price": 250,
+    "duration": "1 mois",
+    "description": "Renforcez vos bases en mathématiques, maîtrisez les méthodes de résolution et préparez vos examens avec des exercices progressifs.",
+    "icon": "calculator"
+  },
+  {
+    "id": 2,
+    "title": "Physique-Chimie",
+    "level": "3e année collège",
+    "levelCategory": "Collège",
+    "subject": "Physique-Chimie",
+    "price": 250,
+    "duration": "1 mois",
+    "description": "Comprenez les phénomènes physiques et chimiques grâce à des explications simples, des exercices pratiques et une préparation aux examens.",
+    "icon": "flask-conical"
+  },
+  {
+    "id": 3,
+    "title": "Français",
+    "level": "3e année collège",
+    "levelCategory": "Collège",
+    "subject": "Français",
+    "price": 200,
+    "duration": "1 mois",
+    "description": "Améliorez votre grammaire, votre conjugaison, votre compréhension de texte et votre expression écrite en français.",
+    "icon": "book-open"
+  },
+  {
+    "id": 4,
+    "title": "Mathématiques",
+    "level": "Tronc commun scientifique",
+    "levelCategory": "Lycée",
+    "subject": "Mathématiques",
+    "price": 280,
+    "duration": "1 mois",
+    "description": "Développez votre raisonnement mathématique et maîtrisez les notions essentielles du tronc commun scientifique.",
+    "icon": "calculator"
+  },
+  {
+    "id": 5,
+    "title": "Physique-Chimie",
+    "level": "Tronc commun scientifique",
+    "levelCategory": "Lycée",
+    "subject": "Physique-Chimie",
+    "price": 280,
+    "duration": "1 mois",
+    "description": "Approfondissez les principes fondamentaux de la physique et de la chimie avec des exercices adaptés au programme.",
+    "icon": "flask-conical"
+  },
+  {
+    "id": 6,
+    "title": "Anglais",
+    "level": "Tronc commun",
+    "levelCategory": "Lycée",
+    "subject": "Anglais",
+    "price": 220,
+    "duration": "1 mois",
+    "description": "Progressez en anglais à travers le vocabulaire, la grammaire, la compréhension orale et la communication quotidienne.",
+    "icon": "languages"
+  },
+  {
+    "id": 7,
+    "title": "Mathématiques",
+    "level": "1re année BAC Sciences",
+    "levelCategory": "Lycée",
+    "subject": "Mathématiques",
+    "price": 300,
+    "duration": "1 mois",
+    "description": "Maîtrisez les fonctions, les suites et les méthodes de calcul avec un accompagnement adapté au programme de première année BAC.",
+    "icon": "calculator"
+  },
+  {
+    "id": 8,
+    "title": "Physique-Chimie",
+    "level": "1re année BAC Sciences",
+    "levelCategory": "Lycée",
+    "subject": "Physique-Chimie",
+    "price": 300,
+    "duration": "1 mois",
+    "description": "Travaillez les notions essentielles du programme scientifique et préparez-vous aux contrôles avec des exercices ciblés.",
+    "icon": "flask-conical"
+  },
+  {
+    "id": 9,
+    "title": "Sciences de la Vie et de la Terre",
+    "level": "1re année BAC Sciences",
+    "levelCategory": "Lycée",
+    "subject": "SVT",
+    "price": 280,
+    "duration": "1 mois",
+    "description": "Comprenez les mécanismes du vivant, les phénomènes naturels et les méthodes de raisonnement scientifique.",
+    "icon": "leaf"
+  },
+  {
+    "id": 10,
+    "title": "Mathématiques",
+    "level": "2e année BAC Sciences Mathématiques",
+    "levelCategory": "Lycée",
+    "subject": "Mathématiques",
+    "price": 350,
+    "duration": "1 mois",
+    "description": "Préparez le BAC avec un travail approfondi sur les notions avancées, les exercices types et les méthodes de résolution.",
+    "icon": "calculator"
+  },
+  {
+    "id": 11,
+    "title": "Physique-Chimie",
+    "level": "2e année BAC Sciences Physiques",
+    "levelCategory": "Lycée",
+    "subject": "Physique-Chimie",
+    "price": 350,
+    "duration": "1 mois",
+    "description": "Consolidez vos connaissances, entraînez-vous sur des exercices de niveau BAC et améliorez votre méthode de résolution.",
+    "icon": "flask-conical"
+  },
+  {
+    "id": 12,
+    "title": "Philosophie",
+    "level": "2e année BAC",
+    "levelCategory": "Lycée",
+    "subject": "Philosophie",
+    "price": 220,
+    "duration": "1 mois",
+    "description": "Apprenez à analyser les sujets, structurer vos dissertations et construire une argumentation claire pour l'examen du BAC.",
+    "icon": "brain"
+  },
+  {
+    "id": 13,
+    "title": "Français",
+    "level": "2e année BAC",
+    "levelCategory": "Lycée",
+    "subject": "Français",
+    "price": 250,
+    "duration": "1 mois",
+    "description": "Préparez l'examen avec des exercices de compréhension, de langue et de production écrite adaptés au programme du BAC.",
+    "icon": "book-open"
+  }
+]
