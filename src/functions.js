@@ -1,5 +1,5 @@
 // function afficherCours
-export async function afficherCours() {
+export async function afficherCours(tab) {
   try {
     const response = await fetch(new URL("./courses.json", import.meta.url));
 
@@ -9,10 +9,11 @@ export async function afficherCours() {
 
     const courses = await response.json();
     const container = document.querySelector(".cards");
+    const tabCours = tab ?? courses;
 
     container.innerHTML = "";
 
-    courses.forEach((course) => {
+    tabCours.forEach((course) => {
       const card = document.createElement("div");
 
       card.className =
@@ -66,6 +67,55 @@ export async function afficherCours() {
 
       container.append(card);
     });
+  } catch (error) {
+    console.error("Erreur :", error);
+  }
+}
+// filtrerParNiveau()
+const filter_niveau = document.querySelector("#niveau");
+const filter_matier = document.querySelector("#matiere");
+
+export async function filtrerParNiveau() {
+  try {
+    const response = await fetch(new URL("./courses.json", import.meta.url));
+
+    if (!response.ok) {
+      throw new Error("Impossible de charger les cours");
+    }
+
+    const courses = await response.json();
+    const result = courses.filter(
+      (cour) =>
+        (filter_niveau.value === "" ||
+          cour.levelValue === filter_niveau.value) &&
+        (filter_matier.value === "" ||
+          cour.subject === filter_matier.value),
+    );
+
+    afficherCours(result);
+  } catch (error) {
+    console.error("Erreur :", error);
+  }
+}
+// filtrerParMatiere
+export async function filtrerParMatiere() {
+  try {
+    const response = await fetch(new URL("./courses.json", import.meta.url));
+
+    if (!response.ok) {
+      throw new Error("Impossible de charger les cours");
+    }
+
+    const courses = await response.json();
+    const result = courses.filter(
+      (cour) =>
+        (filter_niveau.value === "" ||
+          cour.levelValue === filter_niveau.value) &&
+        (filter_matier.value === "" ||
+          cour.subject === filter_matier.value),
+    );
+
+    afficherCours(result);
   } catch (error) {
     console.error("Erreur :", error);
   }
