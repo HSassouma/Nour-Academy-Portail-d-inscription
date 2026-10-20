@@ -19,7 +19,7 @@
     "price": 250,
     "duration": "1 mois",
     "description": "Comprenez les phénomènes physiques et chimiques grâce à des explications simples, des exercices pratiques et une préparation aux examens.",
-    "icon": "flask-conical"
+    "icon": "flask"
   },
   {
     "id": 3,
@@ -52,7 +52,7 @@
     "price": 280,
     "duration": "1 mois",
     "description": "Approfondissez les principes fondamentaux de la physique et de la chimie avec des exercices adaptés au programme.",
-    "icon": "flask-conical"
+    "icon": "flask"
   },
   {
     "id": 6,
@@ -63,7 +63,7 @@
     "price": 220,
     "duration": "1 mois",
     "description": "Progressez en anglais à travers le vocabulaire, la grammaire, la compréhension orale et la communication quotidienne.",
-    "icon": "languages"
+    "icon": "language"
   },
   {
     "id": 7,
@@ -85,7 +85,7 @@
     "price": 300,
     "duration": "1 mois",
     "description": "Travaillez les notions essentielles du programme scientifique et préparez-vous aux contrôles avec des exercices ciblés.",
-    "icon": "flask-conical"
+    "icon": "flask"
   },
   {
     "id": 9,
@@ -118,7 +118,7 @@
     "price": 350,
     "duration": "1 mois",
     "description": "Consolidez vos connaissances, entraînez-vous sur des exercices de niveau BAC et améliorez votre méthode de résolution.",
-    "icon": "flask-conical"
+    "icon": "flask"
   },
   {
     "id": 12,
