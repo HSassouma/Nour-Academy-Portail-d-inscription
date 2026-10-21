@@ -9,7 +9,15 @@
     "price": 250,
     "duration": "1 mois",
     "description": "Renforcez vos bases en mathématiques, maîtrisez les méthodes de résolution et préparez vos examens avec des exercices progressifs.",
-    "icon": "calculator"
+    "icon": "calculator",
+    "programme": [
+      "Nombres relatifs et calcul littéral",
+      "Identités remarquables et équations",
+      "Racines carrées et puissances",
+      "Fonctions linéaires et affines",
+      "Théorème de Thalès et trigonométrie",
+      "Géométrie dans l’espace et statistiques"
+    ]
   },
   {
     "id": 2,
@@ -21,7 +29,15 @@
     "price": 250,
     "duration": "1 mois",
     "description": "Comprenez les phénomènes physiques et chimiques grâce à des explications simples, des exercices pratiques et une préparation aux examens.",
-    "icon": "flask"
+    "icon": "flask",
+    "programme": [
+      "Mouvement et forces",
+      "Poids, masse et équilibre d’un corps",
+      "Énergie électrique et circuits",
+      "Lumière et formation des images",
+      "Atomes, molécules et réactions chimiques",
+      "Mélanges et techniques de séparation"
+    ]
   },
   {
     "id": 3,
@@ -33,7 +49,15 @@
     "price": 200,
     "duration": "1 mois",
     "description": "Améliorez votre grammaire, votre conjugaison, votre compréhension de texte et votre expression écrite en français.",
-    "icon": "book-open"
+    "icon": "book-open",
+    "programme": [
+      "Lecture du récit et de la nouvelle",
+      "Le texte descriptif",
+      "Le texte argumentatif",
+      "Grammaire : temps, modes et discours rapporté",
+      "Conjugaison et orthographe",
+      "Expression écrite et production de textes"
+    ]
   },
   {
     "id": 4,
@@ -45,7 +69,15 @@
     "price": 280,
     "duration": "1 mois",
     "description": "Développez votre raisonnement mathématique et maîtrisez les notions essentielles du tronc commun scientifique.",
-    "icon": "calculator"
+    "icon": "calculator",
+    "programme": [
+      "Ensembles de nombres et logique",
+      "Applications et fonctions",
+      "Équations, inéquations et polynômes",
+      "Calcul vectoriel et géométrie repérée",
+      "Trigonométrie et transformations du plan",
+      "Statistiques et probabilités"
+    ]
   },
   {
     "id": 5,
@@ -57,7 +89,15 @@
     "price": 280,
     "duration": "1 mois",
     "description": "Approfondissez les principes fondamentaux de la physique et de la chimie avec des exercices adaptés au programme.",
-    "icon": "flask"
+    "icon": "flask",
+    "programme": [
+      "Mesure et masse volumique",
+      "Mouvement, forces et équilibre",
+      "Travail et énergie mécanique",
+      "Courant et tension électriques",
+      "Lumière et lentilles",
+      "Espèces chimiques et réactions"
+    ]
   },
   {
     "id": 6,
@@ -69,7 +109,15 @@
     "price": 220,
     "duration": "1 mois",
     "description": "Progressez en anglais à travers le vocabulaire, la grammaire, la compréhension orale et la communication quotidienne.",
-    "icon": "language"
+    "icon": "language",
+    "programme": [
+      "Present, past and future tenses",
+      "Modal verbs and conditionals",
+      "Vocabulary: school, family and daily life",
+      "Reading comprehension strategies",
+      "Writing short paragraphs and emails",
+      "Oral communication and pronunciation"
+    ]
   },
   {
     "id": 7,
@@ -81,7 +129,15 @@
     "price": 300,
     "duration": "1 mois",
     "description": "Maîtrisez les fonctions, les suites et les méthodes de calcul avec un accompagnement adapté au programme de première année BAC.",
-    "icon": "calculator"
+    "icon": "calculator",
+    "programme": [
+      "Limites et continuité",
+      "Dérivation et étude de fonctions",
+      "Suites numériques",
+      "Trigonométrie et fonctions trigonométriques",
+      "Produit scalaire et géométrie dans l’espace",
+      "Probabilités et statistiques"
+    ]
   },
   {
     "id": 8,
@@ -93,7 +149,15 @@
     "price": 300,
     "duration": "1 mois",
     "description": "Travaillez les notions essentielles du programme scientifique et préparez-vous aux contrôles avec des exercices ciblés.",
-    "icon": "flask"
+    "icon": "flask",
+    "programme": [
+      "Cinématique et dynamique",
+      "Travail, énergie et puissance",
+      "Champ électrique et circuits",
+      "Optique géométrique",
+      "Transformations chimiques et stoechiométrie",
+      "Acides, bases et réactions en solution"
+    ]
   },
   {
     "id": 9,
@@ -105,7 +169,15 @@
     "price": 280,
     "duration": "1 mois",
     "description": "Comprenez les mécanismes du vivant, les phénomènes naturels et les méthodes de raisonnement scientifique.",
-    "icon": "leaf"
+    "icon": "leaf",
+    "programme": [
+      "La tectonique des plaques",
+      "Volcanisme, séismes et formation des reliefs",
+      "La reproduction humaine",
+      "Génétique et transmission des caractères",
+      "Nutrition et métabolisme",
+      "Écosystèmes et environnement"
+    ]
   },
   {
     "id": 10,
@@ -117,7 +189,15 @@
     "price": 350,
     "duration": "1 mois",
     "description": "Préparez le BAC avec un travail approfondi sur les notions avancées, les exercices types et les méthodes de résolution.",
-    "icon": "calculator"
+    "icon": "calculator",
+    "programme": [
+      "Limites, continuité et dérivabilité",
+      "Fonctions logarithmes et exponentielles",
+      "Suites numériques et intégrales",
+      "Nombres complexes",
+      "Arithmétique dans Z",
+      "Équations différentielles et probabilités"
+    ]
   },
   {
     "id": 11,
@@ -129,7 +209,15 @@
     "price": 350,
     "duration": "1 mois",
     "description": "Consolidez vos connaissances, entraînez-vous sur des exercices de niveau BAC et améliorez votre méthode de résolution.",
-    "icon": "flask"
+    "icon": "flask",
+    "programme": [
+      "Ondes mécaniques et ondes lumineuses",
+      "Transformations nucléaires et radioactivité",
+      "Dipôles RC, RL et RLC",
+      "Mécanique : lois de Newton et mouvements",
+      "Chimie organique : alcools, aldéhydes et acides",
+      "Équilibres chimiques et électrochimie"
+    ]
   },
   {
     "id": 12,
@@ -141,7 +229,15 @@
     "price": 220,
     "duration": "1 mois",
     "description": "Apprenez à analyser les sujets, structurer vos dissertations et construire une argumentation claire pour l'examen du BAC.",
-    "icon": "brain"
+    "icon": "brain",
+    "programme": [
+      "Le sujet et la conscience",
+      "La vérité et la connaissance",
+      "La raison et l’expérience",
+      "La liberté et le déterminisme",
+      "La morale et la politique",
+      "L’art et la technique"
+    ]
   },
   {
     "id": 13,
@@ -153,7 +249,16 @@
     "price": 250,
     "duration": "1 mois",
     "description": "Préparez l'examen avec des exercices de compréhension, de langue et de production écrite adaptés au programme du BAC.",
-    "icon": "book-open"
+    "icon": "book-open",
+    "programme": [
+      "Étude du roman",
+      "Étude du théâtre",
+      "Étude de la poésie",
+      "La littérature d’idées",
+      "Méthodologie du commentaire composé",
+      "Méthodologie de la dissertation",
+      "Langue et expression écrite"
+    ]
   },
   {
     "id": 14,
@@ -165,7 +270,15 @@
     "price": 180,
     "duration": "1 mois",
     "description": "Améliorez votre compréhension des textes arabes, votre grammaire et vos compétences en expression écrite.",
-    "icon": "book-open"
+    "icon": "book-open",
+    "programme": [
+      "Lecture et analyse de textes arabes",
+      "Grammaire : fonctions grammaticales",
+      "Morphologie et conjugaison",
+      "Expression écrite et rédaction",
+      "Figures de style : comparaison et métaphore",
+      "Compréhension et production orale"
+    ]
   },
   {
     "id": 15,
@@ -177,7 +290,15 @@
     "price": 190,
     "duration": "1 mois",
     "description": "Apprenez les bases de la communication en anglais, enrichissez votre vocabulaire et pratiquez les structures grammaticales.",
-    "icon": "language"
+    "icon": "language",
+    "programme": [
+      "Past simple and present perfect",
+      "Future forms and conditionals",
+      "Comparatives and superlatives",
+      "Vocabulary: hobbies, school and travel",
+      "Reading and listening comprehension",
+      "Writing messages and short stories"
+    ]
   },
   {
     "id": 16,
@@ -189,7 +310,15 @@
     "price": 200,
     "duration": "1 mois",
     "description": "Découvrez les notions essentielles de biologie et de géologie avec des schémas, des résumés et des exercices.",
-    "icon": "leaf"
+    "icon": "leaf",
+    "programme": [
+      "La reproduction humaine",
+      "La nutrition et la digestion",
+      "La respiration et la circulation",
+      "Le système nerveux",
+      "La géologie et les ressources naturelles",
+      "L’environnement et la protection des écosystèmes"
+    ]
   },
   {
     "id": 17,
@@ -201,7 +330,15 @@
     "price": 200,
     "duration": "1 mois",
     "description": "Révisez les événements historiques et les notions géographiques à travers des fiches synthétiques et des cartes.",
-    "icon": "globe"
+    "icon": "globe",
+    "programme": [
+      "Le Maroc au XIXe siècle et les réformes",
+      "Le Maroc sous le protectorat",
+      "Les deux guerres mondiales",
+      "La décolonisation et la construction du Maroc indépendant",
+      "Population, villes et migrations",
+      "Ressources, activités économiques et développement"
+    ]
   },
   {
     "id": 18,
@@ -213,7 +350,15 @@
     "price": 200,
     "duration": "1 mois",
     "description": "Renforcez vos compétences en langue arabe, analyse de textes et production écrite selon le programme du lycée.",
-    "icon": "book-open"
+    "icon": "book-open",
+    "programme": [
+      "Analyse de textes narratifs et poétiques",
+      "Grammaire : phrase et fonctions",
+      "Morphologie : dérivation et conjugaison",
+      "Rhétorique : image et style",
+      "Expression écrite : description et argumentation",
+      "Lecture et compréhension"
+    ]
   },
   {
     "id": 19,
@@ -225,7 +370,15 @@
     "price": 220,
     "duration": "1 mois",
     "description": "Travaillez la compréhension, la grammaire et la rédaction pour communiquer avec plus de précision en français.",
-    "icon": "book-open"
+    "icon": "book-open",
+    "programme": [
+      "Le récit et ses composantes",
+      "Le texte descriptif",
+      "Le texte explicatif",
+      "Grammaire : phrase complexe et temps",
+      "Orthographe et enrichissement lexical",
+      "Résumé et expression écrite"
+    ]
   },
   {
     "id": 20,
@@ -237,7 +390,15 @@
     "price": 240,
     "duration": "1 mois",
     "description": "Étudiez les bases des sciences de la vie et de la Terre grâce à des explications structurées et des exercices.",
-    "icon": "leaf"
+    "icon": "leaf",
+    "programme": [
+      "La cellule, unité du vivant",
+      "Nutrition et métabolisme",
+      "Reproduction et cycles de vie",
+      "Génétique : bases de l’hérédité",
+      "Écosystèmes et biodiversité",
+      "Géologie : roches, sols et phénomènes naturels"
+    ]
   },
   {
     "id": 21,
@@ -249,7 +410,15 @@
     "price": 230,
     "duration": "1 mois",
     "description": "Apprenez à analyser des documents historiques, lire des cartes et organiser vos réponses aux évaluations.",
-    "icon": "globe"
+    "icon": "globe",
+    "programme": [
+      "Le monde antique et les grandes civilisations",
+      "Le Moyen Âge et la civilisation arabo-musulmane",
+      "Les grandes découvertes et les révolutions",
+      "La Révolution industrielle",
+      "Cartographie et milieux naturels",
+      "Population, agriculture et villes"
+    ]
   },
   {
     "id": 22,
@@ -261,7 +430,15 @@
     "price": 210,
     "duration": "1 mois",
     "description": "Initiez-vous aux grandes questions philosophiques et apprenez à formuler des arguments clairs et cohérents.",
-    "icon": "brain"
+    "icon": "brain",
+    "programme": [
+      "Qu’est-ce que la philosophie ?",
+      "La connaissance et le doute",
+      "La raison et les sens",
+      "Le langage et la pensée",
+      "La liberté et la responsabilité",
+      "Méthodologie de l’argumentation"
+    ]
   },
   {
     "id": 23,
@@ -273,7 +450,15 @@
     "price": 230,
     "duration": "1 mois",
     "description": "Développez votre vocabulaire, votre compréhension écrite et vos capacités de communication en anglais.",
-    "icon": "language"
+    "icon": "language",
+    "programme": [
+      "Tenses review and reported speech",
+      "Passive voice and modals",
+      "Conditionals and relative clauses",
+      "Vocabulary: science, environment and culture",
+      "Reading and listening comprehension",
+      "Writing formal and informal texts"
+    ]
   },
   {
     "id": 24,
@@ -285,7 +470,15 @@
     "price": 240,
     "duration": "1 mois",
     "description": "Améliorez vos méthodes de lecture, d'analyse et de rédaction pour réussir les contrôles de première année BAC.",
-    "icon": "book-open"
+    "icon": "book-open",
+    "programme": [
+      "Le roman et le récit",
+      "Le théâtre et la représentation",
+      "La poésie et les figures de style",
+      "La littérature d’idées",
+      "Analyse de texte et commentaire",
+      "Dissertation et expression écrite"
+    ]
   },
   {
     "id": 25,
@@ -297,7 +490,15 @@
     "price": 220,
     "duration": "1 mois",
     "description": "Découvrez les méthodes de réflexion philosophique et apprenez à construire une argumentation structurée.",
-    "icon": "brain"
+    "icon": "brain",
+    "programme": [
+      "La philosophie et ses domaines",
+      "La connaissance scientifique",
+      "La vérité et l’opinion",
+      "La liberté et la loi",
+      "La morale et la justice",
+      "L’art et le beau"
+    ]
   },
   {
     "id": 26,
@@ -309,7 +510,15 @@
     "price": 220,
     "duration": "1 mois",
     "description": "Approfondissez la grammaire arabe, l'analyse littéraire et les techniques de rédaction adaptées au lycée.",
-    "icon": "book-open"
+    "icon": "book-open",
+    "programme": [
+      "Analyse de textes littéraires",
+      "Poésie : rythme et images",
+      "Roman et nouvelle",
+      "Grammaire : syntaxe et fonctions",
+      "Morphologie et conjugaison",
+      "Expression écrite et argumentation"
+    ]
   },
   {
     "id": 27,
@@ -321,7 +530,15 @@
     "price": 280,
     "duration": "1 mois",
     "description": "Révisez les notions scientifiques essentielles et entraînez-vous à exploiter des documents et des résultats expérimentaux.",
-    "icon": "leaf"
+    "icon": "leaf",
+    "programme": [
+      "La transmission des caractères héréditaires",
+      "Le support moléculaire de l’information génétique",
+      "Les mutations et la variabilité génétique",
+      "La reproduction humaine et sa régulation hormonale",
+      "Le système immunitaire et la réponse immunitaire",
+      "Les phénomènes géologiques et l’histoire de la Terre"
+    ]
   },
   {
     "id": 28,
@@ -333,7 +550,15 @@
     "price": 240,
     "duration": "1 mois",
     "description": "Préparez les épreuves d'anglais avec des activités de compréhension, de vocabulaire et de rédaction.",
-    "icon": "language"
+    "icon": "language",
+    "programme": [
+      "Advanced tenses and reported speech",
+      "Passive voice and conditionals",
+      "Phrasal verbs and vocabulary",
+      "Reading and analysing texts",
+      "Writing essays and formal letters",
+      "Oral expression and debate"
+    ]
   },
   {
     "id": 29,
@@ -345,7 +570,15 @@
     "price": 240,
     "duration": "1 mois",
     "description": "Préparez l'examen avec des révisions de langue, des analyses de textes et des exercices de production écrite.",
-    "icon": "book-open"
+    "icon": "book-open",
+    "programme": [
+      "Étude de textes littéraires et d’idées",
+      "Poésie moderne et classique",
+      "Roman et théâtre",
+      "Grammaire et analyse syntaxique",
+      "Rhétorique et figures de style",
+      "Dissertation et expression écrite"
+    ]
   },
   {
     "id": 30,
@@ -357,6 +590,14 @@
     "price": 250,
     "duration": "1 mois",
     "description": "Organisez vos révisions du BAC grâce aux repères historiques, aux analyses géographiques et aux méthodes de rédaction.",
-    "icon": "globe"
+    "icon": "globe",
+    "programme": [
+      "Le monde depuis 1945",
+      "La guerre froide et les relations internationales",
+      "Le Maroc indépendant et son développement",
+      "Les conflits contemporains et les organisations internationales",
+      "Mondialisation et échanges",
+      "Développement durable et enjeux territoriaux"
+    ]
   }
 ]
