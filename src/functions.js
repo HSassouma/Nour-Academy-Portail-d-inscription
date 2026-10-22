@@ -77,9 +77,22 @@ export async function afficherCours(tab) {
     console.error("Erreur :", error);
   }
 }
-// filtrerParNiveau()
+// filtres niveau, matière et recherche
 const filter_niveau = document.querySelector("#niveau");
 const filter_matier = document.querySelector("#matiere");
+const filter_recherche = document.querySelector("#recherche");
+
+function filtrerCours(courses) {
+  const recherche = filter_recherche.value.trim().toLowerCase();
+
+  return courses.filter(
+    (cour) =>
+      (filter_niveau.value === "" ||
+        cour.levelValue === filter_niveau.value) &&
+      (filter_matier.value === "" || cour.subject === filter_matier.value) &&
+      (recherche === "" || cour.subject.toLowerCase().includes(recherche)),
+  );
+}
 
 export async function filtrerParNiveau() {
   try {
@@ -90,12 +103,7 @@ export async function filtrerParNiveau() {
     }
 
     const courses = await response.json();
-    const result = courses.filter(
-      (cour) =>
-        (filter_niveau.value === "" ||
-          cour.levelValue === filter_niveau.value) &&
-        (filter_matier.value === "" || cour.subject === filter_matier.value),
-    );
+    const result = filtrerCours(courses);
 
     afficherCours(result);
   } catch (error) {
@@ -112,12 +120,24 @@ export async function filtrerParMatiere() {
     }
 
     const courses = await response.json();
-    const result = courses.filter(
-      (cour) =>
-        (filter_niveau.value === "" ||
-          cour.levelValue === filter_niveau.value) &&
-        (filter_matier.value === "" || cour.subject === filter_matier.value),
-    );
+    const result = filtrerCours(courses);
+
+    afficherCours(result);
+  } catch (error) {
+    console.error("Erreur :", error);
+  }
+}
+// rechercherParMatiere
+export async function rechercherParMatiere() {
+  try {
+    const response = await fetch(new URL("./courses.json", import.meta.url));
+
+    if (!response.ok) {
+      throw new Error("Impossible de charger les cours");
+    }
+
+    const courses = await response.json();
+    const result = filtrerCours(courses);
 
     afficherCours(result);
   } catch (error) {
@@ -155,10 +175,10 @@ export function afficherPanier() {
       const item = document.createElement("div");
 
       item.className =
-        "flex items-start justify-between gap-3 border-b border-[#E6F0E9] py-3 first:pt-0 last:border-b-0 last:pb-0";
+        "flex items-start  max-h-20 overflow-y-auto justify-between gap-3 border-b border-[#E6F0E9] py-3 first:pt-0 last:border-b-0 last:pb-0";
 
       const infos = document.createElement("div");
-      infos.className = "min-w-0";
+      infos.className = "min-w-0    ";
 
       const matiere = document.createElement("p");
       matiere.className =
