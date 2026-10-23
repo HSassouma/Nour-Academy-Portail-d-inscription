@@ -1,13 +1,24 @@
-// function afficherCours
-export async function afficherCours(tab) {
-  try {
+// chargement des cours, une seule fois
+let tousLesCours = null;
+
+async function chargerCours() {
+  if (tousLesCours === null) {
     const response = await fetch(new URL("./courses.json", import.meta.url));
 
     if (!response.ok) {
       throw new Error("Impossible de charger les cours");
     }
 
-    const courses = await response.json();
+    tousLesCours = await response.json();
+  }
+
+  return tousLesCours;
+}
+
+// function afficherCours
+export async function afficherCours(tab) {
+  try {
+    const courses = tab ?? (await chargerCours());
     const container = document.querySelector(".cards");
     const tabCours = tab ?? courses;
 
@@ -98,73 +109,45 @@ export async function afficherCours(tab) {
 
       container.append(card);
     });
+
+    document.querySelector("#resultats_count").textContent =
+      `${tabCours.length} cours`;
+    document
+      .querySelector("#etat_vide")
+      .classList.toggle("hidden", tabCours.length > 0);
   } catch (error) {
     console.error("Erreur :", error);
   }
 }
-// filtres niveau, matière et recherche
+// filtres niveau + matière + recherche par titre
 const filter_niveau = document.querySelector("#niveau");
 const filter_matier = document.querySelector("#matiere");
 const filter_recherche = document.querySelector("#recherche");
 
-function filtrerCours(courses) {
-  const recherche = filter_recherche.value.trim().toLowerCase();
+function sansAccents(texte) {
+  return texte
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+function filtrerListe(courses) {
+  const recherche = sansAccents(filter_recherche.value.trim());
 
   return courses.filter(
     (cour) =>
       (filter_niveau.value === "" ||
         cour.levelValue === filter_niveau.value) &&
       (filter_matier.value === "" || cour.subject === filter_matier.value) &&
-      (recherche === "" || cour.subject.toLowerCase().includes(recherche)),
+      (recherche === "" ||
+        sansAccents(`${cour.title} ${cour.subject}`).includes(recherche)),
   );
 }
 
-export async function filtrerParNiveau() {
+export async function appliquerFiltres() {
   try {
-    const response = await fetch(new URL("./courses.json", import.meta.url));
-
-    if (!response.ok) {
-      throw new Error("Impossible de charger les cours");
-    }
-
-    const courses = await response.json();
-    const result = filtrerCours(courses);
-
-    afficherCours(result);
-  } catch (error) {
-    console.error("Erreur :", error);
-  }
-}
-// filtrerParMatiere
-export async function filtrerParMatiere() {
-  try {
-    const response = await fetch(new URL("./courses.json", import.meta.url));
-
-    if (!response.ok) {
-      throw new Error("Impossible de charger les cours");
-    }
-
-    const courses = await response.json();
-    const result = filtrerCours(courses);
-
-    afficherCours(result);
-  } catch (error) {
-    console.error("Erreur :", error);
-  }
-}
-// rechercherParMatiere
-export async function rechercherParMatiere() {
-  try {
-    const response = await fetch(new URL("./courses.json", import.meta.url));
-
-    if (!response.ok) {
-      throw new Error("Impossible de charger les cours");
-    }
-
-    const courses = await response.json();
-    const result = filtrerCours(courses);
-
-    afficherCours(result);
+    const courses = await chargerCours();
+    afficherCours(filtrerListe(courses));
   } catch (error) {
     console.error("Erreur :", error);
   }
