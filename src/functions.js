@@ -15,6 +15,8 @@ export async function afficherCours(tab) {
 
     tabCours.forEach((course) => {
       const card = document.createElement("div");
+      const complet = course.seats === 0;
+      const places = `${course.seats} place${course.seats > 1 ? "s" : ""} restante${course.seats > 1 ? "s" : ""}`;
 
       card.className =
         "w-full space-y-3 rounded-2xl border border-[#E6F0E9] bg-white p-4 shadow-sm";
@@ -28,7 +30,7 @@ export async function afficherCours(tab) {
             <i class="fa-solid fa-${course.icon} text-2xl" aria-hidden="true"></i>
           </div>
 
-          <div>
+          <div class="min-w-0">
             <h2 class="text-lg font-bold text-[#174A3A]">
               ${course.title}
             </h2>
@@ -38,18 +40,36 @@ export async function afficherCours(tab) {
             </p>
 
             <p class="mt-1 text-xs text-[#65716A]">
-              ${course.duration}
+              <i class="fa-regular fa-clock mr-1" aria-hidden="true"></i>
+              ${course.schedule}
             </p>
           </div>
         </main>
 
-        <p class="text-sm text-[#65716A]">
+        <p class="line-clamp-2 text-sm text-[#65716A]">
           ${course.description}
         </p>
 
-        <p class="text-sm text-[#1D2924]">
-          <strong class="text-[#174A3A]">${course.price} DH</strong> / séance
-        </p>
+        <div class="flex flex-wrap items-end justify-between gap-x-3 gap-y-1">
+          <p class="text-sm text-[#1D2924]">
+            <strong class="text-lg text-[#174A3A]">${course.price * 4} DH</strong>
+            <span class="text-xs text-[#65716A]">/ mois</span>
+          </p>
+          <p class="text-xs text-[#65716A]">${course.price} DH / séance</p>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span
+            class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${
+              complet
+                ? "bg-red-50 text-red-700"
+                : "bg-[#E6F0E9] text-[#174A3A]"
+            }"
+          >
+            ${complet ? "Complet" : places}
+          </span>
+          <span class="text-xs text-[#65716A]">${course.duration}</span>
+        </div>
 
         <a
           href="#"
@@ -60,9 +80,14 @@ export async function afficherCours(tab) {
 
         <button
           type="button"
-          class="w-full rounded-xl bg-[#174A3A] p-2 text-sm font-medium text-white hover:bg-[#10372C]"
+          class="w-full rounded-xl p-2 text-sm font-medium transition ${
+            complet
+              ? "cursor-not-allowed bg-gray-200 text-gray-500"
+              : "bg-[#174A3A] text-white hover:bg-[#10372C]"
+          }"
+          ${complet ? "disabled" : ""}
         >
-          Ajouter au panier +
+          ${complet ? "Complet" : "Ajouter au panier +"}
         </button>
       `;
 
@@ -153,7 +178,8 @@ const detailTitre = document.querySelector("#detail_titre");
 const detailNiveau = document.querySelector("#detail_niveau");
 const detailDescription = document.querySelector("#detail_description");
 const detailProgramme = document.querySelector("#detail_programme");
-const detailDuree = document.querySelector("#detail_duree");
+const detailCreneau = document.querySelector("#detail_creneau");
+const detailPlaces = document.querySelector("#detail_places");
 const detailPrix = document.querySelector("#detail_prix");
 const detailPrixMensuel = document.querySelector("#detail_prix_mensuel");
 
@@ -261,11 +287,28 @@ export async function afficherDetailsCours(idcard) {
     coursSelectionne = result;
 
     detailTitre.textContent = result.title;
-    detailNiveau.textContent = result.level;
+    detailNiveau.textContent = `${result.level} · ${result.duration}`;
     detailDescription.textContent = result.description;
-    detailDuree.textContent = result.duration;
+    detailCreneau.textContent = result.schedule;
+    detailPlaces.textContent =
+      result.seats === 0
+        ? "Complet"
+        : `${result.seats} place${result.seats > 1 ? "s" : ""} restante${result.seats > 1 ? "s" : ""}`;
     detailPrix.textContent = `${result.price} DH`;
     detailPrixMensuel.textContent = `${result.price * 4} DH`;
+
+    const boutonAjouter = document.querySelector("#ajouter_panier");
+    const complet = result.seats === 0;
+
+    boutonAjouter.disabled = complet;
+    boutonAjouter.className = `w-full rounded-xl px-4 py-3 font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#174A3A] focus:ring-offset-2 ${
+      complet
+        ? "cursor-not-allowed bg-gray-200 text-gray-500"
+        : "bg-[#174A3A] text-white hover:bg-[#10372C]"
+    }`;
+    boutonAjouter.innerHTML = complet
+      ? "Complet"
+      : 'Ajouter au panier <i class="fa-solid fa-basket-shopping ml-2" aria-hidden="true"></i>';
 
     const chapitres = result.programme ?? [];
 
