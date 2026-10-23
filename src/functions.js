@@ -82,33 +82,42 @@ export async function afficherCours(tab) {
           <span class="text-xs text-[#65716A]">${course.duration}</span>
         </div>
 
-        <a
-          href="#"
-          class="block text-right text-sm text-[#174A3A] underline"
-        >
-          Voir les détails
-        </a>
+        <div class="flex flex-col gap-2">
+          <button
+            type="button"
+            class="btn-details min-h-11 w-full rounded-xl border border-[#174A3A] px-4 py-2 text-sm font-medium text-[#174A3A] transition hover:bg-[#E6F0E9]"
+          >
+            Voir les détails
+          </button>
 
-        <button
-          type="button"
-          class="w-full rounded-xl p-2 text-sm font-medium transition ${
-            complet
-              ? "cursor-not-allowed bg-gray-200 text-gray-500"
-              : "bg-[#174A3A] text-white hover:bg-[#10372C]"
-          }"
-          ${complet ? "disabled" : ""}
-        >
-          ${complet ? "Complet" : "Ajouter au panier +"}
-        </button>
+          <button
+            type="button"
+            data-id="${course.id}"
+            data-complet="${complet}"
+            class="btn-ajouter min-h-11 w-full rounded-xl px-4 py-2 text-sm font-medium transition ${
+              complet
+                ? "cursor-not-allowed bg-gray-200 text-gray-500"
+                : "bg-[#174A3A] text-white hover:bg-[#10372C] disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600"
+            }"
+            ${complet ? "disabled" : ""}
+          >
+            ${complet ? "Complet" : "Ajouter au panier +"}
+          </button>
+        </div>
       `;
 
-      card.addEventListener("click", (event) => {
-        event.preventDefault();
-        afficherDetailsCours(course.id);
+      card
+        .querySelector(".btn-details")
+        .addEventListener("click", () => afficherDetailsCours(course.id));
+
+      card.querySelector(".btn-ajouter").addEventListener("click", () => {
+        ajouterCoursAuPanier(course);
       });
 
       container.append(card);
     });
+
+    mettreAJourBoutonsCatalogue();
 
     document.querySelector("#resultats_count").textContent =
       `${tabCours.length} cours`;
@@ -178,77 +187,111 @@ export function fermerDetailsCours() {
   detailOverlay.classList.add("hidden");
 }
 
+function estDansPanier(id) {
+  return panier.some((cours) => cours.id === id);
+}
+
+function mettreAJourBoutonsCatalogue() {
+  document.querySelectorAll(".btn-ajouter").forEach((bouton) => {
+    if (bouton.dataset.complet === "true") {
+      return;
+    }
+
+    const dejaAjoute = estDansPanier(Number(bouton.dataset.id));
+
+    bouton.disabled = dejaAjoute;
+    bouton.textContent = dejaAjoute
+      ? "Déjà dans le panier"
+      : "Ajouter au panier +";
+  });
+}
+
 export function afficherPanier() {
-  panierContainer.replaceChildren(
-    ...panier.map((cours) => {
-      const item = document.createElement("div");
+  if (panier.length === 0) {
+    panierContainer.innerHTML = `
+      <p class="py-4 text-center text-sm leading-6 text-[#65716A]">
+        Votre panier est vide.<br />
+        Ajoutez un cours pour commencer.
+      </p>
+    `;
+  } else {
+    panierContainer.innerHTML = panier
+      .map(
+        (cours) => `
+        <div class="flex items-start justify-between gap-2 border-b border-[#E6F0E9] py-3 first:pt-0 last:border-b-0 last:pb-0">
+          <div class="min-w-0">
+            <p class="text-xs font-semibold uppercase tracking-wide text-[#65716A]">
+              ${cours.subject}
+            </p>
+            <h3 class="truncate text-sm font-bold text-[#174A3A]">
+              ${cours.title}
+            </h3>
+            <p class="mt-0.5 text-xs text-[#65716A]">${cours.level}</p>
+            <p class="mt-1 text-xs text-[#65716A]">${cours.schedule}</p>
+            <p class="mt-1 text-sm font-semibold text-[#174A3A]">
+              ${cours.price * 4} DH
+              <span class="text-xs font-normal text-[#65716A]">/ mois</span>
+            </p>
+          </div>
 
-      item.className =
-        "flex items-start  max-h-20 overflow-y-auto justify-between gap-3 border-b border-[#E6F0E9] py-3 first:pt-0 last:border-b-0 last:pb-0";
+          <button
+            type="button"
+            data-id="${cours.id}"
+            class="btn-supprimer flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[#65716A] transition hover:bg-red-50 hover:text-red-700"
+            aria-label="Retirer ${cours.title} du panier"
+          >
+            <i class="fa-solid fa-trash-can" aria-hidden="true"></i>
+          </button>
+        </div>
+      `,
+      )
+      .join("");
 
-      const infos = document.createElement("div");
-      infos.className = "min-w-0    ";
-
-      const matiere = document.createElement("p");
-      matiere.className =
-        "text-xs font-semibold uppercase tracking-wide text-[#65716A]";
-      matiere.textContent = cours.subject;
-
-      const titre = document.createElement("h3");
-      titre.className = "truncate text-sm font-bold text-[#174A3A]";
-      titre.textContent = cours.title;
-
-      const niveau = document.createElement("p");
-      niveau.className = "mt-0.5 text-xs text-[#65716A]";
-      niveau.textContent = cours.level;
-
-      infos.append(matiere, titre, niveau);
-
-      const prix = document.createElement("div");
-      prix.className = "shrink-0 text-right";
-
-      const prixSeance = document.createElement("p");
-      prixSeance.className = "text-sm text-[#1D2924]";
-
-      const montant = document.createElement("strong");
-      montant.className = "text-[#174A3A]";
-      montant.textContent = `${cours.price} DH`;
-
-      const unite = document.createElement("span");
-      unite.className = "text-xs text-[#65716A]";
-      unite.textContent = " / séance";
-
-      prixSeance.append(montant, unite);
-
-      const prixMensuel = document.createElement("p");
-      prixMensuel.className = "mt-1 text-xs text-[#65716A]";
-      prixMensuel.textContent = `${cours.price * 4} DH / mois`;
-
-      prix.append(prixSeance, prixMensuel);
-      item.append(infos, prix);
-
-      return item;
-    }),
-  );
+    panierContainer.querySelectorAll(".btn-supprimer").forEach((bouton) => {
+      bouton.addEventListener("click", () => {
+        supprimerDuPanier(Number(bouton.dataset.id));
+      });
+    });
+  }
 
   nombreCoursPanier.textContent = panier.length;
   totalPanier.textContent = `${panier.reduce(
     (total, cours) => total + cours.price * 4,
     0,
   )} DH`;
+
+  document.querySelector("#continuer").disabled = panier.length === 0;
+
+  mettreAJourBoutonsCatalogue();
+}
+
+export function supprimerDuPanier(id) {
+  const index = panier.findIndex((cours) => cours.id === id);
+
+  if (index !== -1) {
+    panier.splice(index, 1);
+    afficherPanier();
+  }
+}
+
+export function ajouterCoursAuPanier(cours) {
+  if (!cours || cours.seats === 0 || estDansPanier(cours.id)) {
+    return false;
+  }
+
+  panier.push(cours);
+  afficherPanier();
+  return true;
 }
 
 export function ajouterAuPanier() {
-  if (
-    !coursSelectionne ||
-    panier.some((cours) => cours.id === coursSelectionne.id)
-  ) {
+  if (!coursSelectionne) {
     return;
   }
 
-  panier.push(coursSelectionne);
-  afficherPanier();
-  fermerDetailsCours();
+  if (ajouterCoursAuPanier(coursSelectionne)) {
+    fermerDetailsCours();
+  }
 }
 
 export async function afficherDetailsCours(idcard) {
@@ -282,16 +325,20 @@ export async function afficherDetailsCours(idcard) {
 
     const boutonAjouter = document.querySelector("#ajouter_panier");
     const complet = result.seats === 0;
+    const dejaAjoute = estDansPanier(result.id);
+    const indisponible = complet || dejaAjoute;
 
-    boutonAjouter.disabled = complet;
+    boutonAjouter.disabled = indisponible;
     boutonAjouter.className = `w-full rounded-xl px-4 py-3 font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#174A3A] focus:ring-offset-2 ${
-      complet
+      indisponible
         ? "cursor-not-allowed bg-gray-200 text-gray-500"
         : "bg-[#174A3A] text-white hover:bg-[#10372C]"
     }`;
     boutonAjouter.innerHTML = complet
       ? "Complet"
-      : 'Ajouter au panier <i class="fa-solid fa-basket-shopping ml-2" aria-hidden="true"></i>';
+      : dejaAjoute
+        ? "Déjà dans le panier"
+        : 'Ajouter au panier <i class="fa-solid fa-basket-shopping ml-2" aria-hidden="true"></i>';
 
     const chapitres = result.programme ?? [];
 
