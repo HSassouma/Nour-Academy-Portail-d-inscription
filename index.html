@@ -7,6 +7,7 @@
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
     <title>Nour Academy</title>
+    <link rel="icon" type="image/png" href="/src/assets/logo.png" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -111,22 +112,54 @@
     <!-- Cards + Panier -->
     <section id="cards_and_panier" class="bg-[#FAF8F2] py-6 lg:pb-0">
       <div
-        class="contenair_cards  px-4 sm:px-6 md:px-12 max-lg:pb-[calc(65vh_+_env(safe-area-inset-bottom))]"
+        class="contenair_cards px-4 sm:px-6 md:px-12 max-lg:pb-[calc(60vh_+_env(safe-area-inset-bottom))]"
       >
         <div
           class="grid grid-cols-1 items-start gap-6 lg:grid-cols-[72fr_28fr]"
         >
           <div class="min-w-0 lg:pb-6">
-            <h3 class="my-3 text-2xl font-semibold text-[#174A3A]">
-              Cours Disponibles
-            </h3>
+            <div class="my-3 flex flex-wrap items-center justify-between gap-2">
+              <h3 class="text-2xl font-semibold text-[#174A3A]">
+                Cours disponibles
+              </h3>
+              <p
+                id="resultats_count"
+                class="text-sm text-[#65716A]"
+                aria-live="polite"
+              >
+                30 cours
+              </p>
+            </div>
 
             <section
               class="cards grid w-full grid-cols-1 gap-4 py-3 sm:grid-cols-2 xl:grid-cols-3"
             ></section>
+
+            <div
+              id="etat_vide"
+              class="hidden rounded-2xl border border-dashed border-[#C9DCD0] bg-white p-8 text-center"
+            >
+              <i
+                class="fa-solid fa-magnifying-glass text-3xl text-[#174A3A]"
+                aria-hidden="true"
+              ></i>
+              <p class="mt-4 text-lg font-semibold text-[#174A3A]">
+                Aucun cours ne correspond à votre recherche.
+              </p>
+              <p class="mt-2 text-sm text-[#65716A]">
+                Essayez un autre mot-clé ou réinitialisez les filtres.
+              </p>
+              <button
+                type="button"
+                id="reinitialiser_filtres"
+                class="mt-5 min-h-11 rounded-xl border border-[#174A3A] px-5 py-3 font-medium text-[#174A3A] transition hover:bg-[#E6F0E9]"
+              >
+                Réinitialiser les filtres
+              </button>
+            </div>
           </div>
           <aside
-            class="container_panier min-w-0 rounded-2xl border border-[#E6F0E9] bg-white p-4 shadow-sm max-lg:fixed max-lg:inset-x-0 max-lg:bottom-0 max-lg:z-30 max-lg:flex max-lg:max-h-[65vh] max-lg:flex-col max-lg:overflow-hidden max-lg:rounded-b-none max-lg:border-b-0 max-lg:pb-[calc(1rem_+_env(safe-area-inset-bottom))] lg:sticky lg:top-6"
+            class="container_panier min-w-0 rounded-2xl border border-[#E6F0E9] bg-white p-4 shadow-sm max-lg:fixed max-lg:inset-x-0 max-lg:bottom-0 max-lg:z-30 max-lg:flex max-lg:max-h-[60vh] max-lg:flex-col max-lg:overflow-hidden max-lg:rounded-b-none max-lg:border-b-0 max-lg:pb-[calc(1rem_+_env(safe-area-inset-bottom))] lg:sticky lg:top-6"
           >
             <header
               class="header_panier flex items-center gap-2 max-lg:shrink-0 xl:gap-3"
@@ -168,11 +201,16 @@
                 cette étape.
               </p>
 
+              <p
+                id="message_panier"
+                class="hidden rounded-xl bg-red-50 px-3 py-2 text-center text-sm font-medium text-red-700"
+                role="alert"
+              ></p>
+
               <button
                 type="button"
-                id="id"
-  
-                class="w-full rounded-xl bg-[#174A3A] px-4 py-3 font-medium text-white transition-colors hover:bg-[#10372C]"
+                id="continuer"
+                class="min-h-11 w-full rounded-xl bg-[#174A3A] px-4 py-3 font-medium text-white transition-colors hover:bg-[#10372C] disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-600"
               >
                 Continuer
                 <span aria-hidden="true">→</span>
@@ -242,11 +280,13 @@
       <main class="grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div class="rounded-2xl border border-[#E6F0E9] bg-[#FAF8F2] p-4">
           <i
-            class="fa-solid fa-clock text-xl text-[#174A3A]"
+            class="fa-solid fa-calendar-days text-xl text-[#174A3A]"
             aria-hidden="true"
           ></i>
-          <h5 id="detail_duree" class="mt-3 font-semibold">2h / semaine</h5>
-          <p class="mt-1 text-sm text-[#65716A]">1 séance de 2h</p>
+          <h5 id="detail_creneau" class="mt-3 font-semibold">
+            Samedi 09:00 - 11:00
+          </h5>
+          <p class="mt-1 text-sm text-[#65716A]">Créneau hebdomadaire</p>
         </div>
 
         <div class="rounded-2xl border border-[#E6F0E9] bg-[#FAF8F2] p-4">
@@ -254,8 +294,10 @@
             class="fa-solid fa-user-group text-xl text-[#174A3A]"
             aria-hidden="true"
           ></i>
-          <h5 class="mt-3 font-semibold">Petit groupe</h5>
-          <p class="mt-1 text-sm text-[#65716A]">Suivi personnalisé</p>
+          <h5 id="detail_places" class="mt-3 font-semibold">
+            6 places restantes
+          </h5>
+          <p class="mt-1 text-sm text-[#65716A]">Petit groupe · suivi personnalisé</p>
         </div>
       </main>
       <div class="space-y-3">

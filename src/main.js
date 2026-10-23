@@ -5,25 +5,32 @@ import {
   afficherPanier,
   ajouterAuPanier,
   fermerDetailsCours,
-  filtrerParMatiere,
-  filtrerParNiveau,
-  rechercherParMatiere,
+  appliquerFiltres,
   afficherform,
   fermerform,
-  validerFormulaire
+  validerFormulaire,
+}
 } from './functions.js'
 
 afficherCours()
 afficherPanier()
 
 const niveauSelect = document.querySelector('#niveau')
-niveauSelect.addEventListener('change', filtrerParNiveau)
+niveauSelect.addEventListener('change', appliquerFiltres)
 
-const matierSelect=document.querySelector("#matiere")
-matierSelect.addEventListener("change",filtrerParMatiere)
+const matierSelect = document.querySelector('#matiere')
+matierSelect.addEventListener('change', appliquerFiltres)
 
 const rechercheInput = document.querySelector('#recherche')
-rechercheInput.addEventListener('input', rechercherParMatiere)
+rechercheInput.addEventListener('input', appliquerFiltres)
+
+const boutonReinitialiser = document.querySelector('#reinitialiser_filtres')
+boutonReinitialiser.addEventListener('click', () => {
+  niveauSelect.value = ''
+  matierSelect.value = ''
+  rechercheInput.value = ''
+  appliquerFiltres()
+})
 
 const fermerDetail = document.querySelector('#fermer_detail')
 fermerDetail.addEventListener('click', fermerDetailsCours)
@@ -35,7 +42,7 @@ const boutonAjouterPanier = document.querySelector('#ajouter_panier')
 boutonAjouterPanier.addEventListener('click', ajouterAuPanier)
 const reset=document.querySelector("#reset")
 reset.addEventListener("click",fermerform)
-const continuer = document.querySelector("#id");
+const continuer = document.querySelector("#continuer");
 continuer.addEventListener("click",afficherform)
 const formulaire = document.querySelector(".contenainer_form form");
 
