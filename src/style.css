@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+@theme {
+  --color-nour-cream: #FAF8F2;
+  --color-nour-green: #174A3A;
+  --color-nour-soft: #E6F0E9;
+  --color-nour-muted: #65716A;
+  --color-nour-ink: #1D2924;
+}

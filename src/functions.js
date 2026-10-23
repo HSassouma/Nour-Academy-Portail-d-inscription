@@ -1,6 +1,10 @@
 // chargement des cours, une seule fois
 let tousLesCours = null;
 
+function formaterMad(montant) {
+  return `${new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 0 }).format(montant)} MAD`;
+}
+
 async function chargerCours() {
   if (tousLesCours === null) {
     const response = await fetch(new URL("./courses.json", import.meta.url));
@@ -16,6 +20,24 @@ async function chargerCours() {
 }
 
 // function afficherCours
+const catalogueContainer = document.querySelector(".cards");
+
+catalogueContainer.addEventListener("click", async (event) => {
+  const bouton = event.target.closest("button");
+  const carte = bouton?.closest("[data-id]");
+
+  if (!bouton || !carte) return;
+
+  const id = Number(carte.dataset.id);
+
+  if (bouton.matches(".btn-details")) {
+    afficherDetailsCours(id);
+  } else if (bouton.matches(".btn-ajouter")) {
+    const cours = (await chargerCours()).find((element) => element.id === id);
+    ajouterCoursAuPanier(cours);
+  }
+});
+
 export async function afficherCours(tab) {
   try {
     const courses = tab ?? (await chargerCours());
@@ -34,7 +56,7 @@ export async function afficherCours(tab) {
       card.dataset.id = course.id;
 
       card.innerHTML = `
-        <main class="flex items-start gap-3">
+        <header class="flex items-start gap-3">
           <div
             class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#E6F0E9] text-[#174A3A]"
           >
@@ -55,7 +77,7 @@ export async function afficherCours(tab) {
               ${course.schedule}
             </p>
           </div>
-        </main>
+        </header>
 
         <p class="line-clamp-2 text-sm text-[#65716A]">
           ${course.description}
@@ -63,10 +85,10 @@ export async function afficherCours(tab) {
 
         <div class="flex flex-wrap items-end justify-between gap-x-3 gap-y-1">
           <p class="text-sm text-[#1D2924]">
-            <strong class="text-lg text-[#174A3A]">${course.price * 4} DH</strong>
+            <strong class="text-lg text-[#174A3A]">${formaterMad(course.price * 4)}</strong>
             <span class="text-xs text-[#65716A]">/ mois</span>
           </p>
-          <p class="text-xs text-[#65716A]">${course.price} DH / séance</p>
+          <p class="text-xs text-[#65716A]">${formaterMad(course.price)} / séance</p>
         </div>
 
         <div class="flex flex-wrap items-center justify-between gap-2">
@@ -105,14 +127,6 @@ export async function afficherCours(tab) {
           </button>
         </div>
       `;
-
-      card
-        .querySelector(".btn-details")
-        .addEventListener("click", () => afficherDetailsCours(course.id));
-
-      card.querySelector(".btn-ajouter").addEventListener("click", () => {
-        ajouterCoursAuPanier(course);
-      });
 
       container.append(card);
     });
@@ -229,7 +243,7 @@ export function afficherPanier() {
             <p class="mt-0.5 text-xs text-[#65716A]">${cours.level}</p>
             <p class="mt-1 text-xs text-[#65716A]">${cours.schedule}</p>
             <p class="mt-1 text-sm font-semibold text-[#174A3A]">
-              ${cours.price * 4} DH
+              ${formaterMad(cours.price * 4)}
               <span class="text-xs font-normal text-[#65716A]">/ mois</span>
             </p>
           </div>
@@ -255,10 +269,10 @@ export function afficherPanier() {
   }
 
   nombreCoursPanier.textContent = panier.length;
-  totalPanier.textContent = `${panier.reduce(
+  totalPanier.textContent = formaterMad(panier.reduce(
     (total, cours) => total + cours.price * 4,
     0,
-  )} DH`;
+  ));
 
   document.querySelector("#continuer").disabled = panier.length === 0;
 
@@ -272,6 +286,11 @@ export function supprimerDuPanier(id) {
     panier.splice(index, 1);
     afficherPanier();
   }
+}
+
+export function viderPanier() {
+  panier.splice(0, panier.length);
+  afficherPanier();
 }
 
 export function ajouterCoursAuPanier(cours) {
@@ -320,8 +339,8 @@ export async function afficherDetailsCours(idcard) {
       result.seats === 0
         ? "Complet"
         : `${result.seats} place${result.seats > 1 ? "s" : ""} restante${result.seats > 1 ? "s" : ""}`;
-    detailPrix.textContent = `${result.price} DH`;
-    detailPrixMensuel.textContent = `${result.price * 4} DH`;
+    detailPrix.textContent = formaterMad(result.price);
+    detailPrixMensuel.textContent = formaterMad(result.price * 4);
 
     const boutonAjouter = document.querySelector("#ajouter_panier");
     const complet = result.seats === 0;
@@ -371,93 +390,308 @@ export async function afficherDetailsCours(idcard) {
     console.error("Erreur :", error);
   }
 }
-// afficher formulaire
- export function afficherform() {
-  document.querySelector(".contenainer_form").classList.remove("hidden");
-  document.getElementById("overlay_form").classList.remove("hidden");
+// formulaire d'inscription
+const formulaire = document.querySelector(".contenainer_form form");
+const etape1 = document.querySelector("#etape_1");
+const etape2 = document.querySelector("#etape_2");
+const indicateur1 = document.querySelector("#indicateur_etape_1");
+const indicateur2 = document.querySelector("#indicateur_etape_2");
+const ligneEtapes = document.querySelector("#ligne_etapes");
+const boutonRetour = document.querySelector("#etape_retour");
+const boutonSuivant = document.querySelector("#etape_suivante");
+const boutonEnvoyer = document.querySelector("#send");
+
+const champs = [
+  "nom_pere",
+  "email_pere",
+  "telephone",
+  "nom_etudiant",
+  "niveaux",
+  "mot_pass",
+  "confirme_motPass",
+  "consentement",
+];
+
+function champParId(id) {
+  return document.querySelector(`#${id}`);
 }
 
- export function fermerform() {
-  document.querySelector(".contenainer_form").classList.add("hidden");
-  document.getElementById("overlay_form").classList.add("hidden");
+function afficherErreur(champ, message, succes = "") {
+  champ.setCustomValidity(message);
+
+  const erreur = document.querySelector(`#erreur_${champ.id}`);
+
+  if (erreur) {
+    erreur.textContent = message || succes;
+    erreur.classList.toggle("hidden", message === "" && succes === "");
+    erreur.classList.toggle("text-red-600", message !== "");
+    erreur.classList.toggle("text-green-700", message === "" && succes !== "");
+  }
+
+  if (champ.type !== "checkbox") {
+    champ.classList.toggle("border-red-500", message !== "");
+    champ.classList.toggle("border-green-600", message === "" && succes !== "");
+  }
+
+  if (message !== "") {
+    champ.setAttribute("aria-invalid", "true");
+  } else {
+    champ.removeAttribute("aria-invalid");
+  }
 }
 
-// validation de formulaire
- export function validerFormulaire() {
+export function validerChamp(champ) {
+  let message = "";
+  const valeur = champ.value.trim();
+
+  switch (champ.id) {
+    case "nom_pere":
+      if (valeur === "") {
+        message = "Veuillez saisir le nom du responsable.";
+      }
+      break;
+
+    case "email_pere":
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(valeur)) {
+        message = "Veuillez saisir une adresse e-mail valide.";
+      }
+      break;
+
+    case "telephone": {
+      const telephone = valeur.replace(/[\s.-]/g, "");
+
+      if (
+        !/^(06|07)\d{8}$/.test(telephone) &&
+        !/^\+212[67]\d{8}$/.test(telephone)
+      ) {
+        message =
+          "Saisissez un numéro marocain valide (06…, 07… ou +2126/7…).";
+      }
+      break;
+    }
+
+    case "nom_etudiant":
+      if (valeur === "") {
+        message = "Veuillez saisir le nom de l’élève.";
+      }
+      break;
+
+    case "niveaux":
+      if (valeur === "") {
+        message = "Veuillez choisir un niveau scolaire.";
+      }
+      break;
+
+    case "mot_pass": {
+      const motDePasseValide =
+        valeur.length >= 8 &&
+        /[A-Z]/.test(valeur) &&
+        /[0-9]/.test(valeur) &&
+        /[^A-Za-z0-9\s]/.test(valeur);
+
+      if (!motDePasseValide) {
+        message =
+          "8 caractères minimum, avec une majuscule, un chiffre et un caractère spécial.";
+      }
+      break;
+    }
+
+    case "confirme_motPass":
+      if (valeur === "") {
+        message = "Veuillez confirmer le mot de passe.";
+      } else if (valeur !== champParId("mot_pass").value) {
+        message = "Les mots de passe ne correspondent pas.";
+      }
+      break;
+
+    case "consentement":
+      if (!champ.checked) {
+        message = "Vous devez accepter le traitement de vos données.";
+      }
+      break;
+  }
+
+  const messagesSucces = {
+    nom_pere: "Nom renseigné.",
+    email_pere: "Adresse e-mail valide.",
+    telephone: "Numéro marocain valide.",
+    nom_etudiant: "Nom de l’élève renseigné.",
+    niveaux: "Niveau sélectionné.",
+    mot_pass: "Mot de passe conforme.",
+    confirme_motPass: "Les mots de passe correspondent.",
+    consentement: "Consentement enregistré.",
+  };
+  const estRenseigne = champ.type === "checkbox" ? champ.checked : valeur !== "";
+  afficherErreur(champ, message, estRenseigne ? messagesSucces[champ.id] : "");
+
+  if (champ.id === "mot_pass") {
+    mettreAJourJauge();
+
+    const confirmation = champParId("confirme_motPass");
+
+    if (confirmation.value !== "") {
+      validerChamp(confirmation);
+    }
+  }
+
+  return message === "";
+}
+
+function mettreAJourJauge() {
+  const motPasse = champParId("mot_pass").value;
+  const score = [
+    motPasse.length >= 8,
+    /[A-Z]/.test(motPasse),
+    /[0-9]/.test(motPasse),
+    /[^A-Za-z0-9\s]/.test(motPasse),
+  ].filter(Boolean).length;
+
+  const etats = [
+    ["w-0 bg-red-500", "Trop faible", "text-red-600"],
+    ["w-1/4 bg-red-500", "Faible", "text-red-600"],
+    ["w-2/4 bg-orange-500", "Moyen", "text-orange-600"],
+    ["w-3/4 bg-yellow-500", "Bon", "text-yellow-700"],
+    ["w-full bg-green-600", "Fort", "text-green-700"],
+  ];
+
+  const [largeur, texte, couleur] = etats[score];
+
+  document.querySelector("#jauge_barre").className =
+    `h-full rounded-full transition-all ${largeur}`;
+  document.querySelector("#jauge_texte").className =
+    `text-xs font-semibold ${couleur}`;
+  document.querySelector("#jauge_texte").textContent = texte;
+  document.querySelector("#jauge").setAttribute("aria-valuenow", score);
+}
+
+function stylerIndicateur(indicateur, actif) {
+  const [cercle, texte] = indicateur.querySelectorAll("span");
+
+  cercle.classList.toggle("bg-[#174A3A]", actif);
+  cercle.classList.toggle("text-white", actif);
+  cercle.classList.toggle("bg-[#E6F0E9]", !actif);
+  cercle.classList.toggle("text-[#174A3A]", !actif);
+
+  texte.classList.toggle("text-[#174A3A]", actif);
+  texte.classList.toggle("font-semibold", actif);
+  texte.classList.toggle("text-[#65716A]", !actif);
+}
+
+export function afficherEtape(numero) {
+  const deuxieme = numero === 2;
+
+  etape1.classList.toggle("hidden", deuxieme);
+  etape2.classList.toggle("hidden", !deuxieme);
+  boutonRetour.classList.toggle("hidden", !deuxieme);
+  boutonSuivant.classList.toggle("hidden", deuxieme);
+  boutonEnvoyer.classList.toggle("hidden", !deuxieme);
+  stylerIndicateur(indicateur1, true);
+  stylerIndicateur(indicateur2, deuxieme);
+  ligneEtapes.classList.toggle("bg-[#174A3A]", deuxieme);
+  ligneEtapes.classList.toggle("bg-[#E6F0E9]", !deuxieme);
+
+  document.querySelector("#formulaire_inscription").scrollTop = 0;
+}
+
+function validerEtape1() {
   let valide = true;
 
-  const nomPere = document.querySelector("#nom_pere");
-  const email = document.querySelector("#email_pere");
-  const nomEtudiant = document.querySelector("#nom_etudiant");
-  const niveau = document.querySelector("#niveaux");
-  const motPasse = document.querySelector("#mot_pass");
-  const confirmation = document.querySelector("#confirme_motPass");
-  const consentement = document.querySelector("#consentement");
-
-  // Validation du nom du parent
-  if (nomPere.value.trim() === "") {
-    valide = false;
-    nomPere.setCustomValidity("Veuillez saisir votre nom.");
-  } else {
-    nomPere.setCustomValidity("");
-  }
-
-  // Validation de l'email
-  email.setCustomValidity("");
-  if (email.value.trim() === "" || !email.validity.valid) {
-    valide = false;
-    email.setCustomValidity("Veuillez saisir un email valide.");
-  } else {
-    email.setCustomValidity("");
-  }
-
-  // Validation du nom de l'étudiant
-  if (nomEtudiant.value.trim() === "") {
-    valide = false;
-    nomEtudiant.setCustomValidity("Veuillez saisir le nom de l'étudiant.");
-  } else {
-    nomEtudiant.setCustomValidity("");
-  }
-
-  // Validation du niveau scolaire
-  if (niveau.value === "") {
-    valide = false;
-    niveau.setCustomValidity("Veuillez choisir un niveau.");
-  } else {
-    niveau.setCustomValidity("");
-  }
-
-  // Validation du mot de passe
-  const motDePasseValide =
-    motPasse.value.length >= 8 &&
-    /[A-Z]/.test(motPasse.value) &&
-    /[0-9]/.test(motPasse.value) &&
-    /[^A-Za-z0-9\s]/.test(motPasse.value);
-
-  if (!motDePasseValide) {
-    valide = false;
-    motPasse.setCustomValidity(
-      "Minimum 8 caractères, une majuscule, un chiffre et un caractère spécial.",
-    );
-  } else {
-    motPasse.setCustomValidity("");
-  }
-
-  // Validation de la confirmation
-  if (confirmation.value !== motPasse.value) {
-    valide = false;
-    confirmation.setCustomValidity("Les mots de passe ne correspondent pas.");
-  } else {
-    confirmation.setCustomValidity("");
-  }
-
-  // Validation du consentement
-  if (!consentement.checked) {
-    valide = false;
-    consentement.setCustomValidity("Veuillez accepter les conditions.");
-  } else {
-    consentement.setCustomValidity("");
-  }
+  ["nom_pere", "email_pere", "telephone", "nom_etudiant", "niveaux"].forEach(
+    (id) => {
+      if (!validerChamp(champParId(id))) {
+        valide = false;
+      }
+    },
+  );
 
   return valide;
+}
+
+export function validerFormulaire() {
+  let valide = true;
+
+  champs.forEach((id) => {
+    if (!validerChamp(champParId(id))) {
+      valide = false;
+    }
+  });
+
+  return valide;
+}
+
+export function focusPremierChampInvalide() {
+  const champ = champs
+    .map((id) => champParId(id))
+    .find((champ) => !champ.validity.valid);
+
+  if (!champ) {
+    return;
+  }
+
+  if (champ.closest("#etape_2")) {
+    afficherEtape(2);
+  } else {
+    afficherEtape(1);
+  }
+
+  champ.focus();
+}
+
+export function passerEtape2() {
+  if (validerEtape1()) {
+    afficherEtape(2);
+    champParId("mot_pass").focus();
+  } else {
+    focusPremierChampInvalide();
+  }
+}
+
+export function revenirEtape1() {
+  afficherEtape(1);
+  champParId("nom_pere").focus();
+}
+
+export function reinitialiserFormulaire() {
+  formulaire.reset();
+  champs.forEach((id) => afficherErreur(champParId(id), ""));
+  afficherEtape(1);
+  mettreAJourJauge();
+  document.querySelector("#recap_formulaire").textContent = "";
+}
+
+export function afficherform() {
+  const messagePanier = document.querySelector("#message_panier");
+
+  if (panier.length === 0) {
+    messagePanier.textContent =
+      "Ajoutez au moins un cours avant de vous inscrire.";
+    messagePanier.classList.remove("hidden");
+    return false;
+  }
+
+  messagePanier.classList.add("hidden");
+  messagePanier.textContent = "";
+  reinitialiserFormulaire();
+
+  const total = panier.reduce((somme, cours) => somme + cours.price * 4, 0);
+
+  document.querySelector("#recap_formulaire").textContent =
+    `${panier.length} cours sélectionné${panier.length > 1 ? "s" : ""} · ${formaterMad(total)} / mois`;
+
+  document.querySelector("#formulaire_inscription").classList.remove("hidden");
+  document.querySelector("#overlay_form").classList.remove("hidden");
+  champParId("nom_pere").focus();
+
+  return true;
+}
+
+export function fermerform() {
+  document.querySelector("#formulaire_inscription").classList.add("hidden");
+  document.querySelector("#overlay_form").classList.add("hidden");
+  reinitialiserFormulaire();
+  document.querySelector("#continuer").focus();
+}
+
+export function panierEstVide() {
+  return panier.length === 0;
 }
