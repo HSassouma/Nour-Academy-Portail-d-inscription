@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
@@ -172,6 +172,7 @@
               </p>
 
               <button
+              id="btn-panier"
                 type="button"
                 class="w-full rounded-xl bg-[#174A3A] px-4 py-3 font-medium text-white transition-colors hover:bg-[#10372C]"
               >
@@ -327,10 +328,204 @@
           Ajouter au panier
           <i class="fa-solid fa-basket-shopping ml-2" aria-hidden="true"></i>
         </button>
-
-       
       </div>
     </section>
+    <!-- inscription -->
+     <div
+  id="overlay_details"
+  class="hidden fixed inset-0 z-20 bg-black/30 backdrop-blur-[2px]"
+></div>
+
+<section class="contenainer_form hidden fixed left-1/2 top-1/2 z-50 max-h-[90vh] w-[calc(100%-2rem)] max-w-[900px] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl border border-[#e2dfd1] bg-[#faf8f0] p-5 shadow-xl sm:p-7">
+  <form id="form_inscription" class="space-y-5">
+
+    <!-- Informations du responsable -->
+    <div class="space-y-3">
+      <h2 class="flex items-center gap-2 text-base font-bold text-[#193f2e]">
+        <span class="flex h-5 w-5 items-center justify-center rounded-full bg-[#eae5ce] text-xs">1</span>
+        Informations du responsable
+      </h2>
+
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div class="space-y-1.5">
+          <label for="nom_pere" class="block text-xs font-medium text-[#294538]">Nom complet</label>
+          <input type="text" id="nom_pere" name="nom_pere" placeholder="Entrez votre nom complet" class="w-full rounded-lg border border-[#d3d1c4] bg-transparent px-3 py-2.5 text-sm text-[#294538] outline-none transition focus:border-[#269b65] focus:ring-1 focus:ring-[#269b65]" />
+          <p id="erreur_nom_pere" class="text-xs text-red-600"></p>
+        </div>
+
+        <div class="space-y-1.5">
+          <label for="email_pere" class="block text-xs font-medium text-[#294538]">Adresse e-mail</label>
+          <input type="email" id="email_pere" name="email_pere" placeholder="exemple@email.com" class="w-full rounded-lg border border-[#d3d1c4] bg-transparent px-3 py-2.5 text-sm text-[#294538] outline-none transition focus:border-[#269b65] focus:ring-1 focus:ring-[#269b65]" />
+          <p id="erreur_email_pere" class="text-xs text-red-600"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Informations de l'élève -->
+    <div class="space-y-3">
+      <h2 class="flex items-center gap-2 text-base font-bold text-[#193f2e]">
+        <span class="flex h-5 w-5 items-center justify-center rounded-full bg-[#eae5ce] text-xs">2</span>
+        Informations de l'élève
+      </h2>
+
+           <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div class="space-y-1.5">
+          <label for="nom_etudiant" class="block text-xs font-medium text-[#294538]">Prénom de l'élève</label>
+          <input type="text" id="nom_etudiant" name="nom_etudiant" placeholder="Prénom de l'élève" class="w-full rounded-lg border border-[#d3d1c4] bg-transparent px-3 py-2.5 text-sm text-[#294538] outline-none transition focus:border-[#269b65] focus:ring-1 focus:ring-[#269b65]" />
+          <p id="erreur_nom_etudiant" class="text-xs text-red-600"></p>
+        </div>
+
+        <div class="space-y-1.5">
+          <label for="prenom_etudiant" class="block text-xs font-medium text-[#294538]">Nom de famille de l'élève</label>
+          <input type="text" id="prenom_etudiant" name="prenom_etudiant" placeholder="Nom de famille" class="w-full rounded-lg border border-[#d3d1c4] bg-transparent px-3 py-2.5 text-sm text-[#294538] outline-none transition focus:border-[#269b65] focus:ring-1 focus:ring-[#269b65]" />
+          <p id="erreur_prenom_etudiant" class="text-xs text-red-600"></p>
+        </div>
+
+        <div class="space-y-1.5">
+          <label for="niveaux" class="block text-xs font-medium text-[#294538]">Niveau scolaire</label>
+          <select id="niveaux" name="niveaux" class="w-full rounded-lg border border-[#d3d1c4] bg-transparent px-3 py-2.5 text-sm text-[#294538] outline-none transition focus:border-[#269b65] focus:ring-1 focus:ring-[#269b65]">
+            <option value="">Choisir un niveau</option>
+            <option value="college">Collège</option>
+            <option value="tronc-commun">Tronc commun</option>
+            <option value="1bac">1ère année Bac</option>
+            <option value="2bac">2ème année Bac</option>
+          </select>
+          <p id="erreur_niveaux" class="text-xs text-red-600"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sécurité du compte -->
+    <div class="space-y-3">
+      <h2 class="flex items-center gap-2 text-base font-bold text-[#193f2e]">
+        <span class="flex h-5 w-5 items-center justify-center rounded-full bg-[#eae5ce] text-xs">3</span>
+        Sécurité du compte
+      </h2>
+
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div class="space-y-1.5">
+          <label for="mot_pass" class="block text-xs font-medium text-[#294538]">Mot de passe</label>
+          <input type="password" id="mot_pass" name="mot_pass" autocomplete="new-password" placeholder="Créer un mot de passe" class="w-full rounded-lg border border-[#d3d1c4] bg-transparent px-3 py-2.5 text-sm text-[#294538] outline-none transition focus:border-[#269b65] focus:ring-1 focus:ring-[#269b65]" />
+          <p id="erreur_mot_pass" class="text-xs text-red-600"></p>
+        </div>
+
+        <div class="space-y-1.5">
+          <label for="confirme_motPass" class="block text-xs font-medium text-[#294538]">Confirmer le mot de passe</label>
+          <input type="password" id="confirme_motPass" name="confirme_motPass" autocomplete="new-password" placeholder="Confirmer le mot de passe" class="w-full rounded-lg border border-[#d3d1c4] bg-transparent px-3 py-2.5 text-sm text-[#294538] outline-none transition focus:border-[#269b65] focus:ring-1 focus:ring-[#269b65]" />
+          <p id="erreur_confirme_motPass" class="text-xs text-red-600"></p>
+        </div>
+      </div>
+
+      <p class="text-[11px] text-[#7b8175]">Minimum 8 caractères, une majuscule, un chiffre et un caractère spécial.</p>
+    </div>
+
+    <!-- Consentement et confidentialité -->
+    <div class="space-y-2 border-t border-[#e7e3d5] pt-5">
+      <h2 class="text-base font-bold text-[#193f2e]">Consentement et confidentialité</h2>
+
+      <div class="flex items-start gap-2">
+        <input type="checkbox" id="consentement" name="consentement" class="mt-0.5 h-4 w-4 shrink-0 accent-[#193f2e]" />
+        <label for="consentement" class="text-[11px] leading-5 text-[#294538]">
+          J'accepte que Nour Academy traite mes données personnelles pour les besoins de l'inscription et pour me contacter au sujet de mes cours.
+        </label>
+      </div>
+
+      <p id="erreur_consentement" class="text-xs text-red-600"></p>
+      <p class="text-[10px] text-[#7b8175]">Consultez notre politique de confidentialité pour en savoir plus.</p>
+    </div>
+
+    <p id="erreur_cours" class="hidden text-sm text-red-700" role="alert" aria-live="polite"></p>
+
+  <!-- Boutons -->
+    <div class="grid grid-cols-1 gap-3 pt-1 sm:grid-cols-2">
+      <button type="reset" id="reset" class="flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#eae5ce] px-4 py-3 text-sm font-semibold text-[#193f2e] transition hover:bg-[#e0dac0]">
+        Retour aux cours
+        <span aria-hidden="true">‹</span>
+      </button>
+
+      <button type="submit" id="send" class="flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#193f2e] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#24543f]">
+        Confirmer mes informations
+        <span aria-hidden="true">›</span>
+      </button>
+    </div>
+
+  </form>
+</section>
+
+<!-- Confirmation d'inscription -->
+<div id="overlay_confirmation" class="hidden fixed inset-0 z-20 bg-black/30 backdrop-blur-[2px]"></div>
+
+<section class="contenainer_confirmation hidden fixed left-1/2 top-1/2 z-50 max-h-[90vh] w-[calc(100%-2rem)] max-w-[900px] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl border border-[#e2dfd1] bg-[#faf8f0] p-5 shadow-xl sm:p-7">
+  <h2 class="mb-5 text-xl font-bold text-[#193f2e]">
+    <i class="fa-solid fa-check-circle mr-2 text-[#269b65]"></i>
+    Confirmation de l'inscription
+  </h2>
+
+  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+
+    <!-- Fiche élève -->
+    <div class="space-y-4 rounded-xl border border-[#e2dfd1] bg-white p-4 shadow-sm sm:p-5">
+      <h3 class="flex items-center gap-2 text-base font-bold text-[#193f2e]">
+        <i class="fa-solid fa-user-graduate text-[#269b65]"></i>
+        Fiche élève
+      </h3>
+
+      <div class="space-y-2 text-sm">
+        <p><span class="font-medium text-[#294538]">Élève :</span> <span id="confirmation_nom_etudiant" class="text-[#1D2924]">—</span></p>
+        <p><span class="font-medium text-[#294538]">Nom de famille :</span> <span id="confirmation_prenom_etudiant" class="text-[#1D2924]">-</span></p>
+        <p><span class="font-medium text-[#294538]">Niveau scolaire :</span> <span id="confirmation_niveaux" class="text-[#1D2924]">—</span></p>
+        <p><span class="font-medium text-[#294538]">Responsable :</span> <span id="confirmation_nom_pere" class="text-[#1D2924]">—</span></p>
+        <p><span class="font-medium text-[#294538]">E-mail :</span> <span id="confirmation_email_pere" class="text-[#1D2924]">—</span></p>
+      </div>
+
+      <div class="rounded-lg bg-[#f0f5f0] p-3 text-xs leading-5 text-[#65716A]">
+        <i class="fa-solid fa-info-circle mr-1 text-[#174A3A]"></i>
+        Votre inscription sera traitée dans les plus brefs délais. Un conseiller pédagogique vous contactera par e-mail pour confirmer les créneaux et finaliser l'inscription.
+      </div>
+    </div>
+
+    <!-- Cours sélectionnés -->
+    <div class="space-y-4 rounded-xl border border-[#e2dfd1] bg-white p-4 shadow-sm sm:p-5">
+      <h3 class="flex items-center gap-2 text-base font-bold text-[#193f2e]">
+        <i class="fa-solid fa-basket-shopping text-[#269b65]"></i>
+        Cours sélectionnés
+      </h3>
+
+      <div id="confirmation_liste_cours" class="space-y-2 text-sm">
+        <p class="text-[#65716A] italic">Aucun cours sélectionné.</p>
+      </div>
+
+      <hr class="border-[#e2dfd1]" />
+
+      <div class="flex items-center justify-between text-sm font-semibold text-[#193f2e]">
+        <span>Total mensuel</span>
+        <span id="confirmation_total" class="text-lg font-bold text-[#174A3A]">0 DH</span>
+      </div>
+
+      <p class="text-xs leading-5 text-[#65716A]">
+        <i class="fa-solid fa-clock mr-1"></i>
+        Base de 4 séances par matière et par mois. Aucun paiement n'est demandé à cette étape.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Message d'erreur serveur -->
+  <p id="erreur_envoi" class="hidden mt-4 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700"></p>
+
+  <!-- Boutons -->
+  <div class="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+    <button type="button" id="retour_catalogue" class="flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#eae5ce] px-4 py-3 text-sm font-semibold text-[#193f2e] transition hover:bg-[#e0dac0]">
+      <span aria-hidden="true">‹</span>
+      Retour au catalogue
+    </button>
+
+    <button type="button" id="btn_envoyer" class="flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#193f2e] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#24543f]">
+      Envoyer
+      <span aria-hidden="true">›</span>
+    </button>
+  </div>
+</section>
 
     <script type="module" src="/src/main.js"></script>
   </body>
