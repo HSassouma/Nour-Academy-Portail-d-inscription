@@ -298,3 +298,93 @@ export async function afficherDetailsCours(idcard) {
     console.error("Erreur :", error);
   }
 }
+// afficher formulaire
+ export function afficherform() {
+  document.querySelector(".contenainer_form").classList.remove("hidden");
+  document.getElementById("overlay_form").classList.remove("hidden");
+}
+
+ export function fermerform() {
+  document.querySelector(".contenainer_form").classList.add("hidden");
+  document.getElementById("overlay_form").classList.add("hidden");
+}
+
+// validation de formulaire
+ export function validerFormulaire() {
+  let valide = true;
+
+  const nomPere = document.querySelector("#nom_pere");
+  const email = document.querySelector("#email_pere");
+  const nomEtudiant = document.querySelector("#nom_etudiant");
+  const niveau = document.querySelector("#niveaux");
+  const motPasse = document.querySelector("#mot_pass");
+  const confirmation = document.querySelector("#confirme_motPass");
+  const consentement = document.querySelector("#consentement");
+
+  // Validation du nom du parent
+  if (nomPere.value.trim() === "") {
+    valide = false;
+    nomPere.setCustomValidity("Veuillez saisir votre nom.");
+  } else {
+    nomPere.setCustomValidity("");
+  }
+
+  // Validation de l'email
+  email.setCustomValidity("");
+  if (email.value.trim() === "" || !email.validity.valid) {
+    valide = false;
+    email.setCustomValidity("Veuillez saisir un email valide.");
+  } else {
+    email.setCustomValidity("");
+  }
+
+  // Validation du nom de l'étudiant
+  if (nomEtudiant.value.trim() === "") {
+    valide = false;
+    nomEtudiant.setCustomValidity("Veuillez saisir le nom de l'étudiant.");
+  } else {
+    nomEtudiant.setCustomValidity("");
+  }
+
+  // Validation du niveau scolaire
+  if (niveau.value === "") {
+    valide = false;
+    niveau.setCustomValidity("Veuillez choisir un niveau.");
+  } else {
+    niveau.setCustomValidity("");
+  }
+
+  // Validation du mot de passe
+  const motDePasseValide =
+    motPasse.value.length >= 8 &&
+    /[A-Z]/.test(motPasse.value) &&
+    /[0-9]/.test(motPasse.value) &&
+    /[^A-Za-z0-9\s]/.test(motPasse.value);
+
+  if (!motDePasseValide) {
+    valide = false;
+    motPasse.setCustomValidity(
+      "Minimum 8 caractères, une majuscule, un chiffre et un caractère spécial.",
+    );
+  } else {
+    motPasse.setCustomValidity("");
+  }
+
+  // Validation de la confirmation
+  if (confirmation.value !== motPasse.value) {
+    valide = false;
+    confirmation.setCustomValidity("Les mots de passe ne correspondent pas.");
+  } else {
+    confirmation.setCustomValidity("");
+  }
+
+  // Validation du consentement
+  if (!consentement.checked) {
+    valide = false;
+    consentement.setCustomValidity("Veuillez accepter les conditions.");
+  } else {
+    consentement.setCustomValidity("");
+  }
+
+  return valide;
+}

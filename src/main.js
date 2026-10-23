@@ -8,6 +8,9 @@ import {
   filtrerParMatiere,
   filtrerParNiveau,
   rechercherParMatiere,
+  afficherform,
+  fermerform,
+  validerFormulaire
 } from './functions.js'
 
 afficherCours()
@@ -30,3 +33,28 @@ overlayDetail.addEventListener('click', fermerDetailsCours)
 
 const boutonAjouterPanier = document.querySelector('#ajouter_panier')
 boutonAjouterPanier.addEventListener('click', ajouterAuPanier)
+const reset=document.querySelector("#reset")
+reset.addEventListener("click",fermerform)
+const continuer = document.querySelector("#id");
+continuer.addEventListener("click",afficherform)
+const formulaire = document.querySelector(".contenainer_form form");
+
+formulaire.noValidate = true;
+formulaire.querySelectorAll("input, select").forEach(function (champ) {
+  champ.addEventListener("input", function () {
+    validerFormulaire();
+  });
+
+  champ.addEventListener("change", function () {
+    validerFormulaire();
+  });
+});
+formulaire.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  if (validerFormulaire()) {
+    alert("Formulaire valide !");
+  } else {
+    formulaire.reportValidity();
+  }
+});
