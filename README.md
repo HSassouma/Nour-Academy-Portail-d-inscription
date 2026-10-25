@@ -1,26 +1,20 @@
 <div align="center">
   <img src="src/assets/logo.png" alt="Logo Nour Academy" width="112" />
   <h1>Nour Academy · Portail d'inscription</h1>
-  <p>Un parcours simple pour choisir des cours et envoyer un dossier d'inscription complet.</p>
+  <p>Un parcours simple pour choisir des cours et vérifier un dossier d'inscription.</p>
 </div>
 
 <p align="center">
   <img src="https://img.shields.io/badge/interface-responsive-147D64" alt="Interface responsive" />
   <img src="https://img.shields.io/badge/Vite-8-646CFF" alt="Vite 8" />
-  <img src="https://img.shields.io/badge/Node.js-API%20locale-339933" alt="API locale Node.js" />
+  <img src="https://img.shields.io/badge/tests-Playwright-2EAD33" alt="Tests Playwright" />
 </p>
-
-## Aperçu du parcours
-
-<p align="center">
-  <img src="docs/screenshots/parcours-inscription.gif" alt="Aperçu animé du parcours d'inscription : catalogue, panier, formulaire et confirmation" width="820" />
-</p>
-
-<p align="center"><em>Illustration animée du parcours, à titre de présentation.</em></p>
 
 ## Le projet
 
 Nour Academy est un portail d'inscription destiné aux familles des centres de Nador. Il permet de parcourir le catalogue, filtrer et rechercher des cours, composer un panier, remplir un formulaire puis consulter le récapitulatif de la demande.
+
+Le parcours fonctionne entièrement dans le navigateur : aucune inscription n'est envoyée à un serveur ni enregistrée dans un fichier. Le bouton **Terminer** ferme le récapitulatif et réinitialise le parcours local.
 
 L'interface est en français et conçue pour rester utilisable sur téléphone comme sur ordinateur.
 
@@ -28,33 +22,21 @@ L'interface est en français et conçue pour rester utilisable sur téléphone c
 
 - Affichage du catalogue des cours depuis `src/courses.json`.
 - Filtrage par matière et par niveau, et recherche par matière.
-- Sélection de cours dans un panier avec calcul du montant.
-- Formulaire d'inscription et page de confirmation récapitulative.
-- Validation côté navigateur et côté serveur : cours obligatoire, cours vérifiés depuis le catalogue et total mensuel recalculé par l'API.
-- Refus côté serveur d'une inscription déjà enregistrée pour le même prénom et nom de famille, sans tenir compte de la casse ou des espaces autour des noms.
-- Enregistrement local des demandes dans `inscription.json`.
+- Sélection de cours dans un panier avec calcul du montant mensuel.
+- Formulaire d'inscription validé côté navigateur : noms, e-mail, niveau, mot de passe, consentement et sélection d'au moins un cours.
+- Popup de confirmation avec récapitulatif de l'élève, du responsable, des cours et du total.
+- Aucune donnée envoyée ni stockée sur un serveur pendant le parcours.
 
 ## Démarrer en local
 
-Prérequis : Node.js et npm.
+Prérequis : Node.js 20.19+ ou 22.12+ et npm.
 
 ```bash
 npm install
-```
-
-Dans un premier terminal, lancer l'interface :
-
-```bash
 npm run dev
 ```
 
-Dans un second terminal, démarrer l'API locale :
-
-```bash
-npm run serve
-```
-
-Ouvrir l'adresse affichée par Vite (généralement `http://localhost:5173`). L'API écoute sur `http://localhost:3000` par défaut. La variable d'environnement `PORT` permet de changer son port.
+Ouvrir l'adresse affichée par Vite (généralement `http://localhost:5173/Nour-Academy-Portail-d-inscription/`).
 
 ## Vérifier la compilation
 
@@ -68,32 +50,36 @@ Pour prévisualiser le dossier compilé avec Vite :
 npm run preview
 ```
 
-## API locale
+Le workflow `.github/workflows/deploy.yml` compile le projet et publie `dist` sur GitHub Pages lors d'un push sur `main`.
 
-| Méthode | Adresse | Rôle |
-| --- | --- | --- |
-| `GET` | `/api/inscriptions` | Lire les inscriptions enregistrées |
-| `GET` | `/api/inscriptions/next-id` | Obtenir le prochain identifiant de dossier |
-| `POST` | `/api/inscriptions` | Valider et enregistrer une inscription |
+## Tests
 
-L'envoi est refusé si l'élève existe déjà ou si aucun cours valide n'est fourni. Le serveur détermine les cours et les prix à partir de `src/courses.json` avant d'écrire dans `inscription.json`.
+Les tests de bout en bout utilisent Playwright. Ils démarrent automatiquement le serveur de développement Vite.
+
+```bash
+npx playwright install chromium
+npm test
+```
+
+Ils vérifient le catalogue, le panier, les messages de validation, le blocage de la confirmation en cas d'erreur, le récapitulatif et l'absence d'envoi de données.
 
 ## Structure
 
 ```text
 .
-├── server.js                 # API HTTP locale et validation serveur
-├── inscription.json          # Données locales des inscriptions
+├── .github/workflows/deploy.yml # Publication GitHub Pages
+├── index.html                   # Interface et popup de confirmation
 ├── src/
-│   ├── courses.json          # Catalogue et prix des cours
-│   ├── functions.js          # Affichage, recherche, panier et formulaire
-│   ├── main.js               # Initialisation de l'interface
-│   ├── style.css             # Styles
-│   └── assets/logo.png       # Logo
-└── docs/screenshots/
-    └── parcours-inscription.gif # Illustration animée pour ce README
+│   ├── courses.json             # Catalogue et prix des cours
+│   ├── functions.js             # Affichage, recherche, panier et formulaire
+│   ├── main.js                  # Initialisation de l'interface
+│   ├── style.css                # Styles
+│   └── assets/logo.png          # Logo
+├── test/e2e/inscription.spec.js # Tests Playwright
+├── playwright.config.js         # Configuration Playwright
+└── vite.config.js               # Configuration Vite
 ```
 
 ## Données
 
-Ce projet utilise des fichiers JSON locaux pour la démonstration. Les inscriptions sont conservées dans `inscription.json` sur la machine qui exécute le serveur ; ce stockage n'est pas une base de données partagée entre plusieurs instances.
+Le catalogue est chargé depuis `src/courses.json`. Les informations saisies dans le formulaire restent dans la page et sont perdues à la fermeture ou au rechargement de celle-ci ; elles ne sont transmises à aucun service.

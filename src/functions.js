@@ -1,4 +1,20 @@
-﻿// function afficherCours
+﻿const SEANCES_PAR_MOIS = 4
+const REGEX_NOM = /^[\p{L}\p{M}][\p{L}\p{M}\s'’.-]*$/u
+const REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const REGEX_MOT_DE_PASSE = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,128}$/
+const NIVEAUX_AUTORISES = ['college', 'tronc-commun', '1bac', '2bac']
+
+function nomValide(valeur) {
+  const nom = valeur.trim()
+  return nom.length >= 2 && nom.length <= 80 && REGEX_NOM.test(nom)
+}
+
+function emailValide(valeur) {
+  const email = valeur.trim()
+  return email.length <= 254 && REGEX_EMAIL.test(email)
+}
+
+// function afficherCours
 export async function afficherCours(tab) {
   try {
     const response = await fetch(new URL("./courses.json", import.meta.url));
@@ -213,7 +229,7 @@ export function afficherPanier() {
 
       const prixMensuel = document.createElement("p");
       prixMensuel.className = "mt-1 text-xs text-[#65716A]";
-      prixMensuel.textContent = `${cours.price * 4} DH / mois`;
+      prixMensuel.textContent = `${cours.price * SEANCES_PAR_MOIS} DH / mois`;
 
       prix.append(prixSeance, prixMensuel);
       const btnSup = document.createElement("button");
@@ -232,7 +248,7 @@ export function afficherPanier() {
 
   nombreCoursPanier.textContent = panier.length;
   totalPanier.textContent = `${panier.reduce(
-    (total, cours) => total + cours.price * 4,
+    (total, cours) => total + cours.price * SEANCES_PAR_MOIS,
     0,
   )} DH`;
 }
@@ -282,7 +298,7 @@ export async function afficherDetailsCours(idcard) {
     detailDescription.textContent = result.description;
     detailDuree.textContent = result.duration;
     detailPrix.textContent = `${result.price} DH`;
-    detailPrixMensuel.textContent = `${result.price * 4} DH`;
+    detailPrixMensuel.textContent = `${result.price * SEANCES_PAR_MOIS} DH`;
 
     const chapitres = result.programme ?? [];
 
@@ -330,6 +346,21 @@ export function fermerFormulaire() {
 
 // validation
 
+function reinitialiserValidationFormulaire() {
+  const formulaire = document.querySelector('#form_inscription');
+  if (!formulaire) return;
+
+  formulaire.querySelectorAll('[id^="erreur_"]').forEach((element) => {
+    element.textContent = '';
+    if (element.id === 'erreur_cours') {
+      element.classList.add('hidden');
+    }
+  });
+
+  formulaire.querySelectorAll('input, select').forEach((champ) => {
+    champ.classList.remove('border-red-500', 'border-[#269b65]');
+  });
+}
 
 export function validerFormulaire() {
   const formulaire = document.querySelector('#form_inscription');
@@ -350,26 +381,44 @@ export function validerFormulaire() {
   function verifierChamp(champ) {
     let message = '';
 
-    if (champ === nomPere && champ.value.trim() === '') {
-      message = 'Veuillez saisir le nom du responsable.';
+    if (champ === nomPere) {
+      if (champ.value.trim() === '') {
+        message = 'Veuillez saisir le nom du responsable.';
+      } else if (!nomValide(champ.value)) {
+        message = 'Le nom doit contenir entre 2 et 80 caractères, sans chiffres.';
+      }
     } else if (champ === emailPere) {
-      const emailValide = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailValide.test(champ.value.trim())) {
+      if (!emailValide(champ.value)) {
         message = 'Veuillez saisir une adresse e-mail valide.';
       }
-    } else if (champ === nomEtudiant && champ.value.trim() === '') {
-      message = "Veuillez saisir le prénom de l'élève.";
-    } else if (champ === prenomEtudiant && champ.value.trim() === '') {
-      message = "Veuillez saisir le nom de famille de l'élève.";
-    } else if (champ === niveaux && champ.value === '') {
-      message = 'Veuillez choisir un niveau scolaire.';
+    } else if (champ === nomEtudiant) {
+      if (champ.value.trim() === '') {
+        message = "Veuillez saisir le prénom de l'élève.";
+      } else if (!nomValide(champ.value)) {
+        message = 'Le prénom doit contenir entre 2 et 80 caractères, sans chiffres.';
+      }
+    } else if (champ === prenomEtudiant) {
+      if (champ.value.trim() === '') {
+        message = "Veuillez saisir le nom de famille de l'élève.";
+      } else if (!nomValide(champ.value)) {
+        message = 'Le nom de famille doit contenir entre 2 et 80 caractères, sans chiffres.';
+      }
+    } else if (champ === niveaux) {
+      if (champ.value === '') {
+        message = 'Veuillez choisir un niveau scolaire.';
+      } else if (!NIVEAUX_AUTORISES.includes(champ.value)) {
+        message = 'Veuillez choisir un niveau scolaire valide.';
+      }
     } else if (champ === motPass) {
-      const motDePasseValide = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
-      if (!motDePasseValide.test(champ.value)) {
+      if (!REGEX_MOT_DE_PASSE.test(champ.value)) {
         message = '8 caractères minimum, une majuscule, un chiffre et un caractère spécial.';
       }
-    } else if (champ === confirmeMotPass && champ.value !== motPass.value) {
-      message = 'Les mots de passe ne correspondent pas.';
+    } else if (champ === confirmeMotPass) {
+      if (champ.value === '') {
+        message = 'Veuillez confirmer le mot de passe.';
+      } else if (champ.value !== motPass.value) {
+        message = 'Les mots de passe ne correspondent pas.';
+      }
     }
 
     const erreur = document.querySelector(`#erreur_${champ.id}`);
@@ -395,6 +444,10 @@ export function validerFormulaire() {
     erreur.textContent = consentement.checked
       ? ''
       : 'Veuillez accepter le consentement pour continuer.';
+  });
+
+  formulaire.addEventListener('reset', () => {
+    window.setTimeout(reinitialiserValidationFormulaire, 0);
   });
 
   formulaire.addEventListener('submit', (event) => {
@@ -462,18 +515,14 @@ function ouvrirConfirmation({ nomPere, emailPere, nomEtudiant, prenomEtudiant, n
         (c) =>
           `<div class="flex items-center justify-between gap-2">
             <span>${c.title} <span class="text-xs text-[#65716A]">(${c.level})</span></span>
-            <span class="font-medium text-[#174A3A]">${c.price * 4} DH/mois</span>
+            <span class="font-medium text-[#174A3A]">${c.price * SEANCES_PAR_MOIS} DH/mois</span>
           </div>`
       )
       .join('');
   }
 
-  const total = panier.reduce((sum, c) => sum + c.price * 4, 0);
+  const total = panier.reduce((sum, c) => sum + c.price * SEANCES_PAR_MOIS, 0);
   document.querySelector('#confirmation_total').textContent = `${total} DH`;
-
-  const erreurEnvoi = document.querySelector('#erreur_envoi');
-  erreurEnvoi.textContent = '';
-  erreurEnvoi.classList.add('hidden');
 
   fermerFormulaire();
   confirmationSection.classList.remove('hidden');
@@ -485,58 +534,20 @@ export function fermerConfirmation() {
   overlayConfirmation.classList.add('hidden');
 }
 
-// ── Envoi au serveur ─────────────────────────────────────────────────────────
+// ── Fin du parcours (frontend uniquement) ────────────────────────────────────
 
-export async function envoyerInscription() {
-  if (panier.length === 0) {
-    const erreurEnvoi = document.querySelector('#erreur_envoi');
-    erreurEnvoi.textContent = 'Veuillez sélectionner au moins un cours.';
-    erreurEnvoi.classList.remove('hidden');
-    return;
+export function terminerConfirmation() {
+  fermerConfirmation();
+
+  const formulaire = document.querySelector('#form_inscription');
+
+  if (formulaire) {
+    formulaire.reset();
+    reinitialiserValidationFormulaire();
   }
 
-  const nomPere = document.querySelector('#nom_pere').value.trim();
-  const emailPere = document.querySelector('#email_pere').value.trim();
-  const nomEtudiant = document.querySelector('#nom_etudiant').value.trim();
-  const prenomEtudiant = document.querySelector('#prenom_etudiant').value.trim();
-  const niveau = document.querySelector('#niveaux').value;
-
-  const donnees = {
-    responsable: { nom: nomPere, email: emailPere },
-    eleve: { prenom: nomEtudiant, nom_famille: prenomEtudiant, niveau },
-    cours: panier.map((c) => ({ id: c.id })),
-  };
-
-  const btnEnvoyer = document.querySelector('#btn_envoyer');
-  const erreurEnvoi = document.querySelector('#erreur_envoi');
-
-  btnEnvoyer.disabled = true;
-  btnEnvoyer.textContent = 'Envoi en cours…';
-  erreurEnvoi.classList.add('hidden');
-
-  try {
-    const response = await fetch('http://localhost:3000/api/inscriptions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(donnees),
-    });
-
-    const resultat = await response.json();
-
-    if (!response.ok) {
-      throw new Error(resultat.erreur || 'Erreur serveur.');
-    }
-
-    fermerConfirmation();
-    document.querySelector('#form_inscription').reset();
-    panier.splice(0, panier.length);
-    afficherPanier();
-    alert(`✅ Inscription enregistrée !\nN° dossier : ${resultat.inscription.numero_dossier}`);
-  } catch (err) {
-    erreurEnvoi.textContent = err.message;
-    erreurEnvoi.classList.remove('hidden');
-  } finally {
-    btnEnvoyer.disabled = false;
-    btnEnvoyer.innerHTML = 'Envoyer <span aria-hidden="true">›</span>';
-  }
+  panier.splice(0, panier.length);
+  afficherPanier();
 }
+
+

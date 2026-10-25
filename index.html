@@ -349,13 +349,13 @@
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div class="space-y-1.5">
           <label for="nom_pere" class="block text-xs font-medium text-[#294538]">Nom complet</label>
-          <input type="text" id="nom_pere" name="nom_pere" placeholder="Entrez votre nom complet" class="w-full rounded-lg border border-[#d3d1c4] bg-transparent px-3 py-2.5 text-sm text-[#294538] outline-none transition focus:border-[#269b65] focus:ring-1 focus:ring-[#269b65]" />
+          <input type="text" id="nom_pere" name="nom_pere" autocomplete="name" maxlength="80" placeholder="Entrez votre nom complet" class="w-full rounded-lg border border-[#d3d1c4] bg-transparent px-3 py-2.5 text-sm text-[#294538] outline-none transition focus:border-[#269b65] focus:ring-1 focus:ring-[#269b65]" />
           <p id="erreur_nom_pere" class="text-xs text-red-600"></p>
         </div>
 
         <div class="space-y-1.5">
           <label for="email_pere" class="block text-xs font-medium text-[#294538]">Adresse e-mail</label>
-          <input type="email" id="email_pere" name="email_pere" placeholder="exemple@email.com" class="w-full rounded-lg border border-[#d3d1c4] bg-transparent px-3 py-2.5 text-sm text-[#294538] outline-none transition focus:border-[#269b65] focus:ring-1 focus:ring-[#269b65]" />
+          <input type="email" id="email_pere" name="email_pere" autocomplete="email" maxlength="254" placeholder="exemple@email.com" class="w-full rounded-lg border border-[#d3d1c4] bg-transparent px-3 py-2.5 text-sm text-[#294538] outline-none transition focus:border-[#269b65] focus:ring-1 focus:ring-[#269b65]" />
           <p id="erreur_email_pere" class="text-xs text-red-600"></p>
         </div>
       </div>
@@ -371,13 +371,13 @@
            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div class="space-y-1.5">
           <label for="nom_etudiant" class="block text-xs font-medium text-[#294538]">Prénom de l'élève</label>
-          <input type="text" id="nom_etudiant" name="nom_etudiant" placeholder="Prénom de l'élève" class="w-full rounded-lg border border-[#d3d1c4] bg-transparent px-3 py-2.5 text-sm text-[#294538] outline-none transition focus:border-[#269b65] focus:ring-1 focus:ring-[#269b65]" />
+          <input type="text" id="nom_etudiant" name="nom_etudiant" autocomplete="given-name" maxlength="80" placeholder="Prénom de l'élève" class="w-full rounded-lg border border-[#d3d1c4] bg-transparent px-3 py-2.5 text-sm text-[#294538] outline-none transition focus:border-[#269b65] focus:ring-1 focus:ring-[#269b65]" />
           <p id="erreur_nom_etudiant" class="text-xs text-red-600"></p>
         </div>
 
         <div class="space-y-1.5">
           <label for="prenom_etudiant" class="block text-xs font-medium text-[#294538]">Nom de famille de l'élève</label>
-          <input type="text" id="prenom_etudiant" name="prenom_etudiant" placeholder="Nom de famille" class="w-full rounded-lg border border-[#d3d1c4] bg-transparent px-3 py-2.5 text-sm text-[#294538] outline-none transition focus:border-[#269b65] focus:ring-1 focus:ring-[#269b65]" />
+          <input type="text" id="prenom_etudiant" name="prenom_etudiant" autocomplete="family-name" maxlength="80" placeholder="Nom de famille" class="w-full rounded-lg border border-[#d3d1c4] bg-transparent px-3 py-2.5 text-sm text-[#294538] outline-none transition focus:border-[#269b65] focus:ring-1 focus:ring-[#269b65]" />
           <p id="erreur_prenom_etudiant" class="text-xs text-red-600"></p>
         </div>
 
@@ -405,13 +405,13 @@
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div class="space-y-1.5">
           <label for="mot_pass" class="block text-xs font-medium text-[#294538]">Mot de passe</label>
-          <input type="password" id="mot_pass" name="mot_pass" autocomplete="new-password" placeholder="Créer un mot de passe" class="w-full rounded-lg border border-[#d3d1c4] bg-transparent px-3 py-2.5 text-sm text-[#294538] outline-none transition focus:border-[#269b65] focus:ring-1 focus:ring-[#269b65]" />
+          <input type="password" id="mot_pass" name="mot_pass" autocomplete="new-password" maxlength="128" placeholder="Créer un mot de passe" class="w-full rounded-lg border border-[#d3d1c4] bg-transparent px-3 py-2.5 text-sm text-[#294538] outline-none transition focus:border-[#269b65] focus:ring-1 focus:ring-[#269b65]" />
           <p id="erreur_mot_pass" class="text-xs text-red-600"></p>
         </div>
 
         <div class="space-y-1.5">
           <label for="confirme_motPass" class="block text-xs font-medium text-[#294538]">Confirmer le mot de passe</label>
-          <input type="password" id="confirme_motPass" name="confirme_motPass" autocomplete="new-password" placeholder="Confirmer le mot de passe" class="w-full rounded-lg border border-[#d3d1c4] bg-transparent px-3 py-2.5 text-sm text-[#294538] outline-none transition focus:border-[#269b65] focus:ring-1 focus:ring-[#269b65]" />
+          <input type="password" id="confirme_motPass" name="confirme_motPass" autocomplete="new-password" maxlength="128" placeholder="Confirmer le mot de passe" class="w-full rounded-lg border border-[#d3d1c4] bg-transparent px-3 py-2.5 text-sm text-[#294538] outline-none transition focus:border-[#269b65] focus:ring-1 focus:ring-[#269b65]" />
           <p id="erreur_confirme_motPass" class="text-xs text-red-600"></p>
         </div>
       </div>
@@ -438,7 +438,7 @@
 
   <!-- Boutons -->
     <div class="grid grid-cols-1 gap-3 pt-1 sm:grid-cols-2">
-      <button type="reset" id="reset" class="flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#eae5ce] px-4 py-3 text-sm font-semibold text-[#193f2e] transition hover:bg-[#e0dac0]">
+      <button type="reset" id="btn_retour_cours" class="flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#eae5ce] px-4 py-3 text-sm font-semibold text-[#193f2e] transition hover:bg-[#e0dac0]">
         Retour aux cours
         <span aria-hidden="true">‹</span>
       </button>
@@ -480,7 +480,7 @@
 
       <div class="rounded-lg bg-[#f0f5f0] p-3 text-xs leading-5 text-[#65716A]">
         <i class="fa-solid fa-info-circle mr-1 text-[#174A3A]"></i>
-        Votre inscription sera traitée dans les plus brefs délais. Un conseiller pédagogique vous contactera par e-mail pour confirmer les créneaux et finaliser l'inscription.
+        Vérifiez les informations ci-dessous. Cette interface fonctionne uniquement dans le navigateur et ne transmet aucune donnée.
       </div>
     </div>
 
@@ -510,9 +510,6 @@
 
   </div>
 
-  <!-- Message d'erreur serveur -->
-  <p id="erreur_envoi" class="hidden mt-4 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700"></p>
-
   <!-- Boutons -->
   <div class="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
     <button type="button" id="retour_catalogue" class="flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#eae5ce] px-4 py-3 text-sm font-semibold text-[#193f2e] transition hover:bg-[#e0dac0]">
@@ -521,7 +518,7 @@
     </button>
 
     <button type="button" id="btn_envoyer" class="flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#193f2e] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#24543f]">
-      Envoyer
+      Terminer
       <span aria-hidden="true">›</span>
     </button>
   </div>

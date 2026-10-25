@@ -8,10 +8,10 @@ import {
   fermerDetailsCours,
   fermerFormulaire,
   fermerConfirmation,
-  envoyerInscription,
   filtrerParMatiere,
   filtrerParNiveau,
   rechercherParMatiere,
+  terminerConfirmation,
   validerFormulaire,
 } from './functions.js'
 
@@ -39,15 +39,15 @@ boutonAjouterPanier.addEventListener('click', ajouterAuPanier)
 const btnsPanier = document.querySelector('#btn-panier')
 btnsPanier.addEventListener('click', afficherFormulaire)
 
-const reste = document.querySelector('#reset')
-reste.addEventListener('click', fermerFormulaire)
+const btnRetourCours = document.querySelector('#btn_retour_cours')
+btnRetourCours.addEventListener('click', fermerFormulaire)
 
-// Popup de confirmation : Retour au catalogue (ferme sans enregistrer)
+// Popup de confirmation : Retour au catalogue (ferme sans terminer le parcours)
 const btnRetourCatalogue = document.querySelector('#retour_catalogue')
 btnRetourCatalogue.addEventListener('click', fermerConfirmation)
 
-// Popup de confirmation : Envoyer (enregistre dans inscription.json)
+// Popup de confirmation : Terminer (action locale, aucun envoi réseau)
 const btnEnvoyer = document.querySelector('#btn_envoyer')
-btnEnvoyer.addEventListener('click', envoyerInscription)
+btnEnvoyer.addEventListener('click', terminerConfirmation)
 
 validerFormulaire()
