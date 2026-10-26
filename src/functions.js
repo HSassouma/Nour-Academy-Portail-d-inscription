@@ -1,17 +1,17 @@
-﻿const SEANCES_PAR_MOIS = 4
-const REGEX_NOM = /^[\p{L}\p{M}][\p{L}\p{M}\s'’.-]*$/u
-const REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const REGEX_MOT_DE_PASSE = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,128}$/
-const NIVEAUX_AUTORISES = ['college', 'tronc-commun', '1bac', '2bac']
+﻿const SEANCES_PAR_MOIS = 4;
+const REGEX_NOM = /^[\p{L}\p{M}][\p{L}\p{M}\s'’.-]*$/u;
+const REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const REGEX_MOT_DE_PASSE = /^(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,128}$/;
+const NIVEAUX_AUTORISES = ["college", "tronc-commun", "1bac", "2bac"];
 
 function nomValide(valeur) {
-  const nom = valeur.trim()
-  return nom.length >= 2 && nom.length <= 80 && REGEX_NOM.test(nom)
+  const nom = valeur.trim();
+  return nom.length >= 2 && nom.length <= 80 && REGEX_NOM.test(nom);
 }
 
 function emailValide(valeur) {
-  const email = valeur.trim()
-  return email.length <= 254 && REGEX_EMAIL.test(email)
+  const email = valeur.trim();
+  return email.length <= 254 && REGEX_EMAIL.test(email);
 }
 
 // function afficherCours
@@ -75,17 +75,21 @@ export async function afficherCours(tab) {
         </a>
 
         <button
+        id="btn${course.id}"
           type="button"
-          class="w-full rounded-xl bg-[#174A3A] p-2 text-sm font-medium text-white hover:bg-[#10372C]"
+          class="w-full rounded-xl bg-[#174A3A]  p-2 text-sm font-medium text-white hover:bg-[#10372C]"
         >
           Ajouter au panier +
         </button>
       `;
+      
 
       card.addEventListener("click", (event) => {
         event.preventDefault();
         afficherDetailsCours(course.id);
       });
+      const btncard = card.querySelector(`#btn${course.id}`);
+      btncard.addEventListener("click", btnAjoutPanier);
 
       container.append(card);
     });
@@ -93,6 +97,10 @@ export async function afficherCours(tab) {
     console.error("Erreur :", error);
   }
 }
+ function btnAjoutPanier(event) {
+        event.preventDefault();
+      event.currentTarget.textContent = "Ajouté au panier";
+ }
 // filtres niveau, matière et recherche
 const filter_niveau = document.querySelector("#niveau");
 const filter_matier = document.querySelector("#matiere");
@@ -103,8 +111,7 @@ function filtrerCours(courses) {
 
   return courses.filter(
     (cour) =>
-      (filter_niveau.value === "" ||
-        cour.levelValue === filter_niveau.value) &&
+      (filter_niveau.value === "" || cour.levelValue === filter_niveau.value) &&
       (filter_matier.value === "" || cour.subject === filter_matier.value) &&
       (recherche === "" || cour.subject.toLowerCase().includes(recherche)),
   );
@@ -234,8 +241,9 @@ export function afficherPanier() {
       prix.append(prixSeance, prixMensuel);
       const btnSup = document.createElement("button");
       btnSup.type = "button";
-      btnSup.className = "shrink-0 text-[#65716A] hover:text-red-600 transition-colors";
-      btnSup.innerHTML = "<i class=\"fa-solid fa-trash-can\"></i>";
+      btnSup.className =
+        "shrink-0 text-[#65716A] hover:text-red-600 transition-colors";
+      btnSup.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
       btnSup.addEventListener("click", () => supprimerDuPanier(cours.id));
       const droite = document.createElement("div");
       droite.className = "flex items-center gap-2";
@@ -331,146 +339,155 @@ export async function afficherDetailsCours(idcard) {
     console.error("Erreur :", error);
   }
 }
-// Fonction pour afficher le formulaire
- export function afficherFormulaire() {
+export function afficherFormulaire() {
   document.querySelector(".contenainer_form").classList.remove("hidden");
 
   document.querySelector("#overlay_details").classList.remove("hidden");
 }
-
-// Fonction pour fermer le formulaire
 export function fermerFormulaire() {
   document.querySelector(".contenainer_form").classList.add("hidden");
   document.querySelector("#overlay_details").classList.add("hidden");
 }
-
-// validation
-
 function reinitialiserValidationFormulaire() {
-  const formulaire = document.querySelector('#form_inscription');
+  const formulaire = document.querySelector("#form_inscription");
   if (!formulaire) return;
 
   formulaire.querySelectorAll('[id^="erreur_"]').forEach((element) => {
-    element.textContent = '';
-    if (element.id === 'erreur_cours') {
-      element.classList.add('hidden');
+    element.textContent = "";
+    if (element.id === "erreur_cours") {
+      element.classList.add("hidden");
     }
   });
 
-  formulaire.querySelectorAll('input, select').forEach((champ) => {
-    champ.classList.remove('border-red-500', 'border-[#269b65]');
+  formulaire.querySelectorAll("input, select").forEach((champ) => {
+    champ.classList.remove("border-red-500", "border-[#269b65]");
   });
 }
 
 export function validerFormulaire() {
-  const formulaire = document.querySelector('#form_inscription');
+  const formulaire = document.querySelector("#form_inscription");
 
   if (!formulaire) return;
 
-  const nomPere = document.querySelector('#nom_pere');
-  const emailPere = document.querySelector('#email_pere');
-  const nomEtudiant = document.querySelector('#nom_etudiant');
-  const prenomEtudiant = document.querySelector('#prenom_etudiant');
-  const niveaux = document.querySelector('#niveaux');
-  const motPass = document.querySelector('#mot_pass');
-  const confirmeMotPass = document.querySelector('#confirme_motPass');
-  const consentement = document.querySelector('#consentement');
+  const nomPere = document.querySelector("#nom_pere");
+  const emailPere = document.querySelector("#email_pere");
+  const nomEtudiant = document.querySelector("#nom_etudiant");
+  const prenomEtudiant = document.querySelector("#prenom_etudiant");
+  const niveaux = document.querySelector("#niveaux");
+  const motPass = document.querySelector("#mot_pass");
+  const confirmeMotPass = document.querySelector("#confirme_motPass");
+  const consentement = document.querySelector("#consentement");
 
-  const champs = [nomPere, emailPere, nomEtudiant, prenomEtudiant, niveaux, motPass, confirmeMotPass];
+  const champs = [
+    nomPere,
+    emailPere,
+    nomEtudiant,
+    prenomEtudiant,
+    niveaux,
+    motPass,
+    confirmeMotPass,
+  ];
 
   function verifierChamp(champ) {
-    let message = '';
+    let message = "";
 
     if (champ === nomPere) {
-      if (champ.value.trim() === '') {
-        message = 'Veuillez saisir le nom du responsable.';
+      if (champ.value.trim() === "") {
+        message = "Veuillez saisir le nom du responsable.";
       } else if (!nomValide(champ.value)) {
-        message = 'Le nom doit contenir entre 2 et 80 caractères, sans chiffres.';
+        message =
+          "Le nom doit contenir entre 2 et 80 caractères, sans chiffres.";
       }
     } else if (champ === emailPere) {
       if (!emailValide(champ.value)) {
-        message = 'Veuillez saisir une adresse e-mail valide.';
+        message = "Veuillez saisir une adresse e-mail valide.";
       }
     } else if (champ === nomEtudiant) {
-      if (champ.value.trim() === '') {
+      if (champ.value.trim() === "") {
         message = "Veuillez saisir le prénom de l'élève.";
       } else if (!nomValide(champ.value)) {
-        message = 'Le prénom doit contenir entre 2 et 80 caractères, sans chiffres.';
+        message =
+          "Le prénom doit contenir entre 2 et 80 caractères, sans chiffres.";
       }
     } else if (champ === prenomEtudiant) {
-      if (champ.value.trim() === '') {
+      if (champ.value.trim() === "") {
         message = "Veuillez saisir le nom de famille de l'élève.";
       } else if (!nomValide(champ.value)) {
-        message = 'Le nom de famille doit contenir entre 2 et 80 caractères, sans chiffres.';
+        message =
+          "Le nom de famille doit contenir entre 2 et 80 caractères, sans chiffres.";
       }
     } else if (champ === niveaux) {
-      if (champ.value === '') {
-        message = 'Veuillez choisir un niveau scolaire.';
+      if (champ.value === "") {
+        message = "Veuillez choisir un niveau scolaire.";
       } else if (!NIVEAUX_AUTORISES.includes(champ.value)) {
-        message = 'Veuillez choisir un niveau scolaire valide.';
+        message = "Veuillez choisir un niveau scolaire valide.";
       }
     } else if (champ === motPass) {
       if (!REGEX_MOT_DE_PASSE.test(champ.value)) {
-        message = '8 caractères minimum, une majuscule, un chiffre et un caractère spécial.';
+        message =
+          "8 caractères minimum, une majuscule, un chiffre et un caractère spécial.";
       }
     } else if (champ === confirmeMotPass) {
-      if (champ.value === '') {
-        message = 'Veuillez confirmer le mot de passe.';
+      if (champ.value === "") {
+        message = "Veuillez confirmer le mot de passe.";
       } else if (champ.value !== motPass.value) {
-        message = 'Les mots de passe ne correspondent pas.';
+        message = "Les mots de passe ne correspondent pas.";
       }
     }
 
     const erreur = document.querySelector(`#erreur_${champ.id}`);
     if (erreur) erreur.textContent = message;
 
-    champ.classList.toggle('border-red-500', message !== '');
-    champ.classList.toggle('border-[#269b65]', message === '');
+    champ.classList.toggle("border-red-500", message !== "");
+    champ.classList.toggle("border-[#269b65]", message === "");
 
-    return message === '';
+    return message === "";
   }
 
   champs.forEach((champ) => {
-    champ.addEventListener('input', () => {
+    champ.addEventListener("input", () => {
       verifierChamp(champ);
-      if (champ === motPass && confirmeMotPass.value !== '') {
+      if (champ === motPass && confirmeMotPass.value !== "") {
         verifierChamp(confirmeMotPass);
       }
     });
   });
 
-  consentement.addEventListener('change', () => {
-    const erreur = document.querySelector('#erreur_consentement');
+  consentement.addEventListener("change", () => {
+    const erreur = document.querySelector("#erreur_consentement");
     erreur.textContent = consentement.checked
-      ? ''
-      : 'Veuillez accepter le consentement pour continuer.';
+      ? ""
+      : "Veuillez accepter le consentement pour continuer.";
   });
 
-  formulaire.addEventListener('reset', () => {
+  formulaire.addEventListener("reset", () => {
     window.setTimeout(reinitialiserValidationFormulaire, 0);
   });
 
-  formulaire.addEventListener('submit', (event) => {
+  formulaire.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const erreurCours = document.querySelector('#erreur_cours');
+    const erreurCours = document.querySelector("#erreur_cours");
     if (panier.length === 0) {
-      erreurCours.textContent = 'Veuillez sélectionner au moins un cours.';
-      erreurCours.classList.remove('hidden');
+      erreurCours.textContent = "Veuillez sélectionner au moins un cours.";
+      erreurCours.classList.remove("hidden");
       return;
     }
 
-    erreurCours.textContent = '';
-    erreurCours.classList.add('hidden');
+    erreurCours.textContent = "";
+    erreurCours.classList.add("hidden");
 
     const champsValides = champs.map((champ) => verifierChamp(champ));
-    const premierChampInvalide = champs.find((champ, index) => !champsValides[index]);
+    const premierChampInvalide = champs.find(
+      (champ, index) => !champsValides[index],
+    );
 
-    const erreurConsentement = document.querySelector('#erreur_consentement');
+    const erreurConsentement = document.querySelector("#erreur_consentement");
     if (!consentement.checked) {
-      erreurConsentement.textContent = 'Veuillez accepter le consentement pour continuer.';
+      erreurConsentement.textContent =
+        "Veuillez accepter le consentement pour continuer.";
     } else {
-      erreurConsentement.textContent = '';
+      erreurConsentement.textContent = "";
     }
 
     if (premierChampInvalide) {
@@ -482,8 +499,6 @@ export function validerFormulaire() {
       consentement.focus();
       return;
     }
-
-    // Tous les champs sont valides — ouvrir la popup de confirmation
     ouvrirConfirmation({
       nomPere: nomPere.value.trim(),
       emailPere: emailPere.value.trim(),
@@ -494,21 +509,29 @@ export function validerFormulaire() {
   });
 }
 
-// ── Popup de confirmation ────────────────────────────────────────────────────
+const confirmationSection = document.querySelector(".contenainer_confirmation");
+const overlayConfirmation = document.querySelector("#overlay_confirmation");
 
-const confirmationSection = document.querySelector('.contenainer_confirmation');
-const overlayConfirmation = document.querySelector('#overlay_confirmation');
+function ouvrirConfirmation({
+  nomPere,
+  emailPere,
+  nomEtudiant,
+  prenomEtudiant,
+  niveau,
+}) {
+  document.querySelector("#confirmation_nom_etudiant").textContent =
+    nomEtudiant || "—";
+  document.querySelector("#confirmation_prenom_etudiant").textContent =
+    prenomEtudiant || "—";
+  document.querySelector("#confirmation_niveaux").textContent = niveau || "—";
+  document.querySelector("#confirmation_nom_pere").textContent = nomPere || "—";
+  document.querySelector("#confirmation_email_pere").textContent =
+    emailPere || "—";
 
-function ouvrirConfirmation({ nomPere, emailPere, nomEtudiant, prenomEtudiant, niveau }) {
-  document.querySelector('#confirmation_nom_etudiant').textContent = nomEtudiant || '—';
-  document.querySelector('#confirmation_prenom_etudiant').textContent = prenomEtudiant || '—';
-  document.querySelector('#confirmation_niveaux').textContent = niveau || '—';
-  document.querySelector('#confirmation_nom_pere').textContent = nomPere || '—';
-  document.querySelector('#confirmation_email_pere').textContent = emailPere || '—';
-
-  const listeCours = document.querySelector('#confirmation_liste_cours');
+  const listeCours = document.querySelector("#confirmation_liste_cours");
   if (panier.length === 0) {
-    listeCours.innerHTML = '<p class="text-[#65716A] italic">Aucun cours sélectionné.</p>';
+    listeCours.innerHTML =
+      '<p class="text-[#65716A] italic">Aucun cours sélectionné.</p>';
   } else {
     listeCours.innerHTML = panier
       .map(
@@ -516,30 +539,28 @@ function ouvrirConfirmation({ nomPere, emailPere, nomEtudiant, prenomEtudiant, n
           `<div class="flex items-center justify-between gap-2">
             <span>${c.title} <span class="text-xs text-[#65716A]">(${c.level})</span></span>
             <span class="font-medium text-[#174A3A]">${c.price * SEANCES_PAR_MOIS} DH/mois</span>
-          </div>`
+          </div>`,
       )
-      .join('');
+      .join("");
   }
 
   const total = panier.reduce((sum, c) => sum + c.price * SEANCES_PAR_MOIS, 0);
-  document.querySelector('#confirmation_total').textContent = `${total} DH`;
+  document.querySelector("#confirmation_total").textContent = `${total} DH`;
 
   fermerFormulaire();
-  confirmationSection.classList.remove('hidden');
-  overlayConfirmation.classList.remove('hidden');
+  confirmationSection.classList.remove("hidden");
+  overlayConfirmation.classList.remove("hidden");
 }
 
 export function fermerConfirmation() {
-  confirmationSection.classList.add('hidden');
-  overlayConfirmation.classList.add('hidden');
+  confirmationSection.classList.add("hidden");
+  overlayConfirmation.classList.add("hidden");
 }
-
-// ── Fin du parcours (frontend uniquement) ────────────────────────────────────
 
 export function terminerConfirmation() {
   fermerConfirmation();
 
-  const formulaire = document.querySelector('#form_inscription');
+  const formulaire = document.querySelector("#form_inscription");
 
   if (formulaire) {
     formulaire.reset();
@@ -549,5 +570,3 @@ export function terminerConfirmation() {
   panier.splice(0, panier.length);
   afficherPanier();
 }
-
-
