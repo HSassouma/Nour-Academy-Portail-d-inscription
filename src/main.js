@@ -12,8 +12,7 @@ import {
   filtrerParNiveau,
   rechercherParMatiere,
   terminerConfirmation,
-  validerFormulaire,
-  btnAjoutPanier
+  validerFormulaire
 } from './functions.js'
 
 afficherCours()
@@ -50,7 +49,6 @@ btnRetourCatalogue.addEventListener('click', fermerConfirmation)
 // Popup de confirmation : Terminer (action locale, aucun envoi réseau)
 const btnEnvoyer = document.querySelector('#btn_envoyer')
 btnEnvoyer.addEventListener('click', terminerConfirmation)
-const btnn=document.querySelector("#ajouter_panier")
-btnn.addEventListener("click",btnAjoutPanier)
+
 
 validerFormulaire()

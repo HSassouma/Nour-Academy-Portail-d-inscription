@@ -75,32 +75,35 @@ export async function afficherCours(tab) {
         </a>
 
         <button
-        id="btn${course.id}"
+          id="btn${course.id}"
+          data-course-id="${course.id}"
           type="button"
-          class="w-full rounded-xl bg-[#174A3A]  p-2 text-sm font-medium text-white hover:bg-[#10372C]"
+          class="w-full rounded-xl bg-[#174A3A] p-2 text-sm font-medium text-white hover:bg-[#10372C]"
+          aria-pressed="false"
         >
           Ajouter au panier +
         </button>
       `;
-      
 
       card.addEventListener("click", (event) => {
         event.preventDefault();
         afficherDetailsCours(course.id);
       });
       const btncard = card.querySelector(`#btn${course.id}`);
-      btncard.addEventListener("click", btnAjoutPanier);
+      btncard.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        ajouterCoursAuPanier(course);
+      });
 
       container.append(card);
     });
+
+    mettreAJourBoutonsPanier();
   } catch (error) {
     console.error("Erreur :", error);
   }
 }
- function btnAjoutPanier(event) {
-        event.preventDefault();
-      event.currentTarget.textContent = "Ajouté au panier";
- }
 // filtres niveau, matière et recherche
 const filter_niveau = document.querySelector("#niveau");
 const filter_matier = document.querySelector("#matiere");
@@ -187,6 +190,27 @@ const totalPanier = document.querySelector("#total");
 const panier = [];
 let coursSelectionne = null;
 
+function coursEstDansPanier(coursId) {
+  return panier.some((cours) => cours.id === coursId);
+}
+
+function mettreAJourBoutonsPanier() {
+  document.querySelectorAll(".cards button[data-course-id]").forEach((bouton) => {
+    const estAjoute = coursEstDansPanier(Number(bouton.dataset.courseId));
+
+    bouton.textContent = estAjoute ? "Ajouté au panier" : "Ajouter au panier +";
+    bouton.setAttribute("aria-pressed", String(estAjoute));
+  });
+}
+
+function ajouterCoursAuPanier(cours) {
+  if (!cours || coursEstDansPanier(cours.id)) return false;
+
+  panier.push(cours);
+  afficherPanier();
+  return true;
+}
+
 export function fermerDetailsCours() {
   detailCard.classList.add("hidden");
   detailOverlay.classList.add("hidden");
@@ -259,18 +283,15 @@ export function afficherPanier() {
     (total, cours) => total + cours.price * SEANCES_PAR_MOIS,
     0,
   )} DH`;
+
+  mettreAJourBoutonsPanier();
 }
 
 export function ajouterAuPanier() {
-  if (
-    !coursSelectionne ||
-    panier.some((cours) => cours.id === coursSelectionne.id)
-  ) {
+  if (!coursSelectionne || !ajouterCoursAuPanier(coursSelectionne)) {
     return;
   }
 
-  panier.push(coursSelectionne);
-  afficherPanier();
   fermerDetailsCours();
 }
 
